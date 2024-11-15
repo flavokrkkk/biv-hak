@@ -6,7 +6,6 @@ import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
     element: (
       <AuthLayout>
         <Outlet />
@@ -15,7 +14,25 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: ERoutesNames.DEFAULT,
-        element: <div>home</div>,
+        element: (
+          <div>
+            <Outlet />
+          </div>
+        ),
+        children: [
+          {
+            path: "",
+            element: <Navigate to={ERoutesNames.HOME_CONSTRUCTOR} replace />,
+          },
+          {
+            path: ERoutesNames.HOME_CONSTRUCTOR,
+            element: <div>homeconstructor</div>,
+          },
+          {
+            path: ERoutesNames.HOME_REESTR,
+            element: <div>Реестр договоров</div>,
+          },
+        ],
       },
       {
         path: ERoutesNames.REGISTER,
@@ -30,5 +47,9 @@ export const routes = createBrowserRouter([
         element: <Navigate to={ERoutesNames.DEFAULT} replace />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to={ERoutesNames.DEFAULT} replace />,
   },
 ]);
