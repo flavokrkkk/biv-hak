@@ -5,7 +5,13 @@ export const enum ERoutesNames {
   LOGIN = "/login",
   REGISTER = "/register",
   HOME_CONSTRUCTOR = "/home/constructor",
-  HOME_REESTR = "/home/reester",
+  HOME_REESTER_CONTRACTS = "/home/reester",
+  HOME_REESTER_PARTNERS = "/home/partners",
+  HOME_REESTER_CLIENTS = "/home/clients",
+  UNDERWRITING = '/underwriting/',
+  SETTINGS = '/settings/',
+  DOCUMENT = '/document/',
+  CUMULATION = '/cumulation/',
 }
 
 export const routesData: INavigateData[] = [
@@ -33,7 +39,7 @@ export const routesData: INavigateData[] = [
   },
   {
     id: 5,
-    pathname: "/document",
+    pathname: "/cumulation",
     title: "Кумуляция",
   },
 ];

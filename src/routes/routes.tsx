@@ -14,11 +14,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: ERoutesNames.DEFAULT,
-        element: (
-          <div>
-            <Outlet />
-          </div>
-        ),
+        element: <Outlet />,
         children: [
           {
             path: "",
@@ -29,11 +25,20 @@ export const routes = createBrowserRouter([
             element: <div>homeconstructor</div>,
           },
           {
-            path: ERoutesNames.HOME_REESTR,
-            element: <div>Реестр договоров</div>,
+            path: ERoutesNames.HOME_REESTER_CONTRACTS,
+            element: <div>Реестр договоров договоров</div>,
+          },
+          {
+            path: ERoutesNames.HOME_REESTER_PARTNERS,
+            element: <div>Реестр договоров партнеров</div>,
+          },
+          {
+            path: ERoutesNames.HOME_REESTER_CLIENTS,
+            element: <div>Реестр договоров клиентов</div>,
           },
         ],
       },
+
       {
         path: ERoutesNames.REGISTER,
         element: <RegisterPage />,
@@ -41,6 +46,22 @@ export const routes = createBrowserRouter([
       {
         path: ERoutesNames.LOGIN,
         element: <LoginPage />,
+      },
+      {
+        path:ERoutesNames.UNDERWRITING,
+        element:<div>UNDERWRITING</div>
+      },
+      {
+        path:ERoutesNames.SETTINGS,
+        element:<div>SETTINGS</div>
+      },
+      {
+        path:ERoutesNames.DOCUMENT,
+        element:<div>DOCUMENT</div>
+      },
+      {
+        path:ERoutesNames.CUMULATION,
+        element:<div>CUMULATION</div>
       },
       {
         path: "*",
