@@ -4,6 +4,14 @@ import path from "path";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
+  server: {
+    host: true,
+    port: 5173,
+  },
+  esbuild: {
+    target: "esnext",
+    platform: "node",
+  },
   plugins: [
     react(),
     svgr({
