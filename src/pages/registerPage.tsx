@@ -1,3 +1,10 @@
+import { RegisterContent } from "@components/registerContent";
+import { EntranceLayout } from "@views/entrance/entranceLaout";
+
 export const RegisterPage = () => {
-  return <div>RegisterPage</div>;
+  return (
+    <EntranceLayout>
+      <RegisterContent />
+    </EntranceLayout>
+  );
 };

@@ -1,10 +1,11 @@
 import { catchError } from "@helpers/error";
 import { deleteTokens, getToken } from "@helpers/tokenHelper";
+import { EBaseUrls } from "@utils/api";
 import { EErrorsNames } from "@utils/errors";
-import axios, { AxiosDefaults, CreateAxiosDefaults } from "axios";
+import axios, { CreateAxiosDefaults } from "axios";
 
 export const options: CreateAxiosDefaults = {
-  baseURL: "",
+  baseURL: EBaseUrls.BASE_API_URL,
   headers: {
     ["Content-Type"]: "application/json",
   },

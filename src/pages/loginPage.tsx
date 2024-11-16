@@ -1,3 +1,10 @@
+import LoginContent from "@components/loginContent";
+import { EntranceLayout } from "@views/entrance/entranceLaout";
+
 export const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return (
+    <EntranceLayout>
+      <LoginContent />
+    </EntranceLayout>
+  );
 };
