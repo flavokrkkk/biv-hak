@@ -1,6 +1,7 @@
-import HomeConstructorPage from "@pages/home/homeConstructorPage";
+import {HomeConstructorPage} from "@pages/home/homeConstructorPage";
 import HomePartnersDetailPage from "@pages/home/homePartnersDetailPage";
 import HomePartnersPage from "@pages/home/homePartnersPage";
+import { HomeСontractsPage } from "@pages/home/homeСontractsPage";
 import { LoginPage } from "@pages/loginPage";
 import { RegisterPage } from "@pages/registerPage";
 import { ERoutesNames } from "@utils/route";
@@ -29,7 +30,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: ERoutesNames.HOME_REESTR,
-            element: <div>Реестр договоров</div>,
+            element: <HomeСontractsPage />,
           },
           {
             path: ERoutesNames.HOME_PARTNERS,

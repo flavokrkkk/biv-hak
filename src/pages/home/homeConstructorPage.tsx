@@ -1,7 +1,5 @@
 import HomeConstructorContent from "@components/homeConstructorContent";
 
-const HomeConstructorPage = () => {
+export const HomeConstructorPage = () => {
   return <HomeConstructorContent />;
 };
-
-export default HomeConstructorPage;
