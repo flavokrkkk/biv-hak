@@ -8,9 +8,11 @@ import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
 import { IInsurance } from "@models/common";
 import { insureSelector } from "@redux/selectors";
+import { ERoutesNames } from "@utils/route";
 import HomeInfoLayout from "@views/layout/homeInfoLayout";
 import { Button, Space, Table } from "antd";
 import { ChangeEvent, FC, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface IHomeContractsPage {}
 
@@ -25,7 +27,7 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
 
   const dataSource = useMemo(
     () => insurancesFilter.map((data) => ({ ...data, key: `${data.id}` })),
-    [insurancesFilter.length]
+    [insurancesFilter.length, insurancesFilter]
   );
 
   const dataColumns = useMemo(() => {
@@ -66,8 +68,11 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
         render: (_, record: IInsurance) => (
           <Space size="middle" className="flex justify-center">
             <Button
-              icon={<EditOutlined />}
-              onClick={() => console.log(record)}
+              icon={
+                <Link to={`${ERoutesNames.HOME_REESTR}/${record.id}`}>
+                  <EditOutlined />
+                </Link>
+              }
               type="primary"
             ></Button>
           </Space>
@@ -75,12 +80,12 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
       },
     ];
   }, []);
-
+  console.log(dataSource);
   return (
     <div>
       <HomeInfoLayout value={searchValue} onChange={handleChange}>
         <div className="flex space-x-2 justify-end mb-3">
-          <Button variant="solid" color="primary" icon={<PlusOutlined />}>
+          <Button variant="dashed" color="primary" icon={<PlusOutlined />}>
             Добавить
           </Button>
           <Button
@@ -89,9 +94,6 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
             icon={<UnorderedListOutlined />}
           >
             Выбрать
-          </Button>
-          <Button variant="solid" color="primary" icon={<ToolOutlined />}>
-            Редактировать
           </Button>
         </div>
         <Table dataSource={dataSource} columns={dataColumns} size="large" />

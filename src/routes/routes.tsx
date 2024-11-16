@@ -1,6 +1,8 @@
-import {HomeConstructorPage} from "@pages/home/homeConstructorPage";
+import { HomeContractsPage } from "@components/homeContractsPage";
+import { HomeConstructorPage } from "@pages/home/homeConstructorPage";
 import HomePartnersDetailPage from "@pages/home/homePartnersDetailPage";
 import HomePartnersPage from "@pages/home/homePartnersPage";
+import { HomeReesterDetailPage } from "@pages/home/homeReesterDetailPage";
 import { HomeСontractsPage } from "@pages/home/homeСontractsPage";
 import { LoginPage } from "@pages/loginPage";
 import { RegisterPage } from "@pages/registerPage";
@@ -30,7 +32,17 @@ export const routes = createBrowserRouter([
           },
           {
             path: ERoutesNames.HOME_REESTR,
-            element: <HomeСontractsPage />,
+            element: <Outlet />,
+            children: [
+              {
+                path: "",
+                element: <HomeContractsPage />,
+              },
+              {
+                path: `${ERoutesNames.HOME_REESTR}/:id`,
+                element: <HomeReesterDetailPage />,
+              },
+            ],
           },
           {
             path: ERoutesNames.HOME_PARTNERS,
@@ -48,7 +60,11 @@ export const routes = createBrowserRouter([
           },
           {
             path: ERoutesNames.HOME_CLIENTS,
-            element: <div className="w-[1140px] mx-auto">Реестр клиентов(пустышка)</div>,
+            element: (
+              <div className="w-[1140px] mx-auto">
+                Реестр клиентов(пустышка)
+              </div>
+            ),
           },
         ],
       },
