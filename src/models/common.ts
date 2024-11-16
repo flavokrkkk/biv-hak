@@ -36,7 +36,17 @@ export interface ICreateInsuranceData {
   amount: number;
   expiresIn: Date | null;
   duration: number;
-  companyId:number
+  companyId: number;
+}
+
+export interface IInsurance {
+  id: number;
+  name: string;
+  number: number;
+  expiresIn: string | null;
+  objectInsurance: string;
+  amount: string;
+  conditionsInsurance: string;
 }
 
 export interface IPartner {

@@ -43,7 +43,7 @@ const HomePartnersDetailPage = () => {
   }, [id, selectPartner]);
 
   return (
-    <div className="flex flex-col space-y-5 px-4">
+    <div className="flex flex-col space-y-5 px-4 w-[1140px] mx-auto ">
       <div className="flex justify-between">
         <div className="flex flex-col space-y-1">
           <h1 className="font-medium text-xl">{selectPartner?.name}</h1>
@@ -58,7 +58,7 @@ const HomePartnersDetailPage = () => {
           <Button>Редактировать</Button>
         </div>
       </div>
-      <div className="bg-white max-w-[700px] flex flex-col space-y-4 p-3 rounded-lg">
+      <div className="bg-white flex flex-col space-y-4 p-3 rounded-lg">
         <h1 className="font-medium text-xl">Дополнительные функции</h1>
         <div className="flex flex-col space-y-3">
           <div className="flex justify-between">
@@ -87,10 +87,9 @@ const HomePartnersDetailPage = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white max-w-[700px] flex flex-col space-y-4 p-3 rounded-lg">
+      <div className="bg-white flex flex-col space-y-4 p-3 rounded-lg">
         <Tabs
           defaultActiveKey="1"
-          className=""
           items={tabData}
           onChange={() => console.log("")}
         />

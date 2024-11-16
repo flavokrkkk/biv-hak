@@ -20,7 +20,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
       <div className="flex flex-col space-y-2">
         {filterPartners.map((partner) => (
           <div
-            className="border cursor-pointer p-6 pb-10 bg-white ease-in-out"
+            className="border cursor-pointer rounded-lg p-6 pb-10 bg-white ease-in-out"
             key={partner.id}
           >
             <div>

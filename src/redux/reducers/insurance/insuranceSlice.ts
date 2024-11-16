@@ -1,18 +1,29 @@
 import { insuranceMethods } from "@api/insuranceResponse";
-import { ICreateInsuranceData } from "@models/common";
+import { ICreateInsuranceData, IInsurance } from "@models/common";
 import {
   asyncThunkCreator,
   buildCreateSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { insurancedata } from "../../../utils/insurancedata";
 
 const createSliceWithThunks = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 });
 
-const initialState = {
-  insurance: {} as ICreateInsuranceData,
+export interface InsuranceState {
+  insurances: IInsurance[];
+  insurancesFilter: IInsurance[];
+  insurance: ICreateInsuranceData | null;
+  isLoading: boolean;
+  error: string;
+}
+
+const initialState: InsuranceState = {
+  insurance: null,
+  insurancesFilter: insurancedata,
+  insurances: insurancedata,
   isLoading: false,
   error: "",
 };
@@ -62,6 +73,15 @@ export const insuranceSlice = createSliceWithThunks({
           state.isLoading = false;
           message.error(state.error);
         },
+      }
+    ),
+    setSearchInsurances: create.reducer(
+      (state, { payload }: PayloadAction<string>) => {
+        state.insurancesFilter = state.insurances.filter(
+          ({ name: stringSearch }) => {
+            return stringSearch.toLowerCase().includes(payload.toLowerCase());
+          }
+        );
       }
     ),
   }),

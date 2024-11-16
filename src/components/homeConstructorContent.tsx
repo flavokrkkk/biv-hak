@@ -42,9 +42,9 @@ const HomeConstructorContent = () => {
       <div className="flex flex-col space-y-4 h-full p-4 w-[1140px] mx-auto">
         <section className="flex justify-end"></section>
         <form onSubmit={(e) => onSubmit(e)}>
-          <div className="bg-white flex justify-between p-5 ">
+          <div className="bg-white flex justify-between p-6 rounded-lg space-x-4">
             <div className="flex flex-col w-full">
-              <h1 className="font-medium text-2xl mb-4">Создание продукта</h1>
+              <h1 className="font-medium text-2xl mb-4">О продуктe</h1>
               <div className="mr-auto flex flex-col space-y-3">
                 <div className="w-full flex flex-col space-y-1">
                   <label>
@@ -203,13 +203,16 @@ const HomeConstructorContent = () => {
               </div>
             </div>
           </div>
-          <div className="mx-auto w-fit mt-3">
-            <button
-              className=" mx-auto px-2 py-1 rounded-xl bg-[#1677ff] text-white"
-              type="submit"
+          <div className=" w-full mt-3">
+            <Button
+              size="large"
+              variant="solid"
+              color="primary"
+              htmlType="submit"
+              className=" rounded-xl w-full"
             >
               Создать
-            </button>
+            </Button>
           </div>
         </form>
         <div></div>
