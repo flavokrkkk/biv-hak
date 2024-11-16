@@ -55,7 +55,7 @@ export const insuranceSlice = createSliceWithThunks({
         ) => {
           state.insurance = payload;
           state.isLoading = false;
-          message.success('Страховой продукт создан!')
+          message.success("Страховой продукт создан!");
         },
         rejected: (state, { payload }: PayloadAction<string | undefined>) => {
           state.error = payload || "Неизвестная ошибка";
@@ -68,4 +68,4 @@ export const insuranceSlice = createSliceWithThunks({
 });
 
 export const insuranceReducer = insuranceSlice.reducer;
-export const {createInsurance} = insuranceSlice.actions;
+export const insuranceActions = insuranceSlice.actions;

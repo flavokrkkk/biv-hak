@@ -1,0 +1,3 @@
+[submodule "InsuranceBackend"]
+	path = InsuranceBackend
+	url = https://github.com/playgamesgo/InsuranceBackend.git

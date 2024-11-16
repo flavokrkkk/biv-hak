@@ -1,7 +1,11 @@
-import { TabsProps } from "antd";
 import { ERoutesNames } from "./route";
+interface CustomTabItem {
+  key: string;
+  label: React.ReactNode;
+  text: string;
+}
 
-export const tabData: TabsProps["items"] = [
+export const tabData: CustomTabItem[] = [
   {
     key: "1",
     label: "Конструктор продуктов",
@@ -11,16 +15,15 @@ export const tabData: TabsProps["items"] = [
     key: "2",
     label: "Реестр договоров",
     text: ERoutesNames.HOME_REESTR,
-
   },
   {
     key: "3",
     label: "Реестр партнеров",
-    text: ERoutesNames.HOME_PARTNERS
+    text: ERoutesNames.HOME_PARTNERS,
   },
   {
     key: "4",
     label: "Реестр клиентов",
-    text: ERoutesNames.HOME_CLIENTS
+    text: ERoutesNames.HOME_CLIENTS,
   },
 ];

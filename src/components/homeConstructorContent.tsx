@@ -3,9 +3,10 @@ import {
   ToolOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
+import { useActions } from "@hooks/useActions";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { ICreateInsuranceData } from "@models/common";
-import { createInsurance } from "@redux/reducers/insurance/insuranceSlice";
-import { AppDispatch, RootState } from "@store/store";
+import { authSelector } from "@redux/selectors";
 import { Button, DatePicker, Input, Select } from "antd";
 import Modal from "antd/es/modal/Modal";
 import { FormEvent, useState } from "react";
@@ -13,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const HomeConstructorContent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState<Omit<ICreateInsuranceData,'companyId'>>({
+  const [data, setData] = useState<Omit<ICreateInsuranceData, "companyId">>({
     name: "",
     description: "",
     objectInsurance: "",
@@ -23,16 +24,17 @@ const HomeConstructorContent = () => {
     amount: 0,
     expiresIn: null,
     duration: 0,
-    
   });
   const toggleModal = () => setIsOpen((prevState) => !prevState);
-  const dispatch: AppDispatch = useDispatch();
-  
+  const { user } = useAppSelector(authSelector);
+  const { createInsurance } = useActions();
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data)
-    dispatch(createInsurance({...data,companyId:useSelector((state:RootState) => state.authReducer.user.id)}));
-
+    console.log(data);
+    if (user?.id) {
+      createInsurance({ ...data, companyId: user?.id });
+    }
   };
 
   return (
