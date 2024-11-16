@@ -12,6 +12,10 @@ export default defineConfig({
     target: "esnext",
     platform: "node",
   },
+  build: {
+    outDir: "dist",
+  },
+  base: "./",
   plugins: [
     react(),
     svgr({
