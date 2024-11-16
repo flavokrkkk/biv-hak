@@ -6,6 +6,7 @@ import { ERoutesNames } from "@utils/route";
 import { Button, Checkbox, Input, message } from "antd";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import cookies from "js-cookie";
 
 const LoginContent = () => {
   const [loginType, setLoginType] = useState<EAuthTypes>(EAuthTypes.AGENT);
@@ -37,6 +38,7 @@ const LoginContent = () => {
     if (status !== 200) return message.error("Проверьте данные!");
     message.success("Успешный вход");
     navigate(ERoutesNames.DEFAULT);
+    cookies.set("token", "test");
     return data;
   };
 

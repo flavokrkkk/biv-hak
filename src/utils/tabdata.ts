@@ -6,7 +6,6 @@ export const tabData: TabsProps["items"] = [
     key: "1",
     label: "Конструктор продуктов",
     text: ERoutesNames.HOME_CONSTRUCTOR,
-    
   },
   {
     key: "2",

@@ -19,10 +19,11 @@ export interface IAuthRequestData {
 export interface ICreateInsuranceData {
   name: string;
   description: string;
-  typeInsurance: string;
   objectInsurance: string;
   riskInsurance: string;
   conditionsInsurance: string;
   maxAmount: number;
   amount: number;
+  expiresIn:Date | null;
+  duration:number
 }
