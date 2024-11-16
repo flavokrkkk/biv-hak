@@ -1,3 +1,9 @@
-export const reducers = {};
+import { partnersActions, partnersReducer } from "./partners/partners-slice";
 
-export const actions = {};
+export const reducers = {
+  partnersReducer,
+};
+
+export const actions = {
+  ...partnersActions,
+};

@@ -25,7 +25,7 @@ const HomeConstructorContent = () => {
 
   return (
     <>
-      <div className="flex flex-col space-y-4 h-full">
+      <div className="flex flex-col space-y-4 h-full p-4">
         <section className="flex justify-end">
           <div className="flex space-x-2">
             <Button

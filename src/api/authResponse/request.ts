@@ -2,6 +2,7 @@ import { IAuthRequestData, IRegisterRequestData } from "@models/common";
 import axios from "axios";
 import { authMethods } from ".";
 import { EAuthTypes } from "@utils/common";
+import { IAuthResponseData } from "../../models/common";
 
 export const registration = async (
   body: IRegisterRequestData,
@@ -26,13 +27,13 @@ export const registration = async (
       return {
         message: err.response?.data.message,
         status: err.response?.status ?? 500,
-        data: false,
+        data: {} as IAuthResponseData,
       };
     } else {
       return {
         message: "Что то пошло не так",
         status: 500,
-        data: false,
+        data: {} as IAuthResponseData,
       };
     }
   }
@@ -57,13 +58,13 @@ export const authorizate = async (body: IAuthRequestData, type: EAuthTypes) => {
       return {
         message: err.response?.data.message,
         status: err.response?.status ?? 500,
-        data: false,
+        data: {} as IAuthResponseData,
       };
     } else {
       return {
         message: "Что то пошло не так",
         status: 500,
-        data: false,
+        data: {} as IAuthResponseData,
       };
     }
   }

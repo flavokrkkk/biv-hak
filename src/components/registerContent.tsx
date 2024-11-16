@@ -39,7 +39,8 @@ export const RegisterContent = () => {
     if (status !== 200) return message.error("Ошибка!");
     message.success("Успешная регистрация!");
     navigate(ERoutesNames.DEFAULT);
-    cookies.set("token", "test");
+    cookies.set("access_token", data.accessToken);
+    cookies.set("refresh_token", data.refreshToken);
     return data;
   };
 
@@ -120,7 +121,7 @@ export const RegisterContent = () => {
             size="large"
             htmlType="submit"
           >
-            Войти
+            Регистрация
           </Button>
         </div>
       </form>

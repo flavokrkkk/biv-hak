@@ -11,7 +11,7 @@ interface IAuthLayout {
 
 export const AuthLayout: FC<IAuthLayout> = ({ children }) => {
   const navigate = useNavigate();
-  const isAuth = !!cookies.get("token");
+  const isAuth = !!cookies.get("access_token");
   const { pathname } = useLocation();
 
   const publicRoutes = [ERoutesNames.LOGIN, ERoutesNames.REGISTER];
