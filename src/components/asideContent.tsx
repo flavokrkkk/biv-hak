@@ -12,7 +12,7 @@ export const AsideContent: FC<IAsideContent> = ({ routesData }) => {
 
   return (
     <div className="flex h-screen flex-grow py-2 space-y-3 flex-col  w-[210px] ">
-      <div className="flex text-[14px]  justify-center flex-col h-[262px] p-2 space-y-3 rounded-lg bg-white ">
+      <div className="flex text-[14px]  justify-center flex-col h-[100px] p-2 space-y-3 rounded-lg bg-white ">
         {routesData.map((route) => (
           <NavLink
             key={route.id}

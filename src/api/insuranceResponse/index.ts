@@ -1,5 +1,9 @@
 import { axiosForAuth, axiosWithAuth } from "@api/interceptors";
-import { IAuthRequestData, ICreateInsuranceData, IRegisterRequestData } from "@models/common";
+import {
+  IAuthRequestData,
+  ICreateInsuranceData,
+  IRegisterRequestData,
+} from "@models/common";
 import { AxiosResponse } from "axios";
 
 export const insuranceMethods = {
@@ -7,5 +11,9 @@ export const insuranceMethods = {
     url: string,
     body: ICreateInsuranceData
   ): Promise<AxiosResponse<any>> => axiosWithAuth.post(url, body),
-
+  getAgentInsurance: (
+    url: string,
+    agentId: number
+  ): Promise<AxiosResponse<any>> => axiosWithAuth.get(`${url}?agentId=${agentId}`),
 };
+// /api/company/getassignedinsurances

@@ -35,23 +35,4 @@ export const routesData: INavigateData[] = [
     icon: <DiffOutlined />,
   },
 
-  {
-    id: 3,
-    pathname: "/settings",
-    title: "Настройки продукта",
-    icon: <SettingOutlined />,
-  },
-
-  {
-    id: 4,
-    pathname: "/cumulation",
-    title: "Кумуляция",
-    icon: <DeploymentUnitOutlined />,
-  },
-  {
-    id: 5,
-    pathname: "/document",
-    title: "Документы",
-    icon: <CopyOutlined />,
-  },
 ];

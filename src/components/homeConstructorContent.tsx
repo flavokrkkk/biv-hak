@@ -31,9 +31,19 @@ const HomeConstructorContent = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data,user?.id);
     if (user?.id) {
       createInsurance({ ...data, companyId: user?.id });
+      setData({
+        name: "",
+        description: "",
+        objectInsurance: "",
+        riskInsurance: "",
+        conditionsInsurance: "",
+        maxAmount: 0,
+        amount: 0,
+        expiresIn: null,
+        duration: 0,
+      });
     }
   };
 
@@ -41,7 +51,7 @@ const HomeConstructorContent = () => {
     <>
       <div className="flex flex-col space-y-4 h-full p-4 w-[1140px] mx-auto">
         <section className="flex justify-end"></section>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={onSubmit}>
           <div className="bg-white flex justify-between p-6 rounded-lg space-x-4">
             <div className="flex flex-col w-full">
               <h1 className="font-medium text-2xl mb-4">О продуктe</h1>
