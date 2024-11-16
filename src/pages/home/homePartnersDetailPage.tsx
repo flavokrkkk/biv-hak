@@ -7,38 +7,32 @@ import { Button, Checkbox, Switch, Tabs, TabsProps } from "antd";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-interface CustomTabItem {
-  key: string;
-  label: React.ReactNode;
-  text: string;
-}
-
 const HomePartnersDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setSelectPartner } = useActions();
   const { selectPartner } = useAppSelector(partnersSelector);
 
-  const tabData: CustomTabItem[] = [
+  const tabData: TabsProps["items"] = [
     {
       key: "1",
-      label: "Конструктор продуктов",
-      text: ERoutesNames.HOME_CONSTRUCTOR,
+      label: "Автомобиль",
+      children: <CarContact />,
     },
     {
       key: "2",
-      label: "Реестр договоров",
-      text: ERoutesNames.HOME_REESTR,
-    },
-    {
-      key: "3",
-      label: "Реестр партнеров",
-      text: ERoutesNames.HOME_PARTNERS,
+      label: "Документы",
+      children: "Информация об документе",
     },
     {
       key: "4",
-      label: "Реестр клиентов",
-      text: ERoutesNames.HOME_CLIENTS,
+      label: "Стоимость",
+      children: "Информация о стоимость",
+    },
+    {
+      key: "5",
+      label: "Оплата",
+      children: "Информация об оплата",
     },
   ];
 

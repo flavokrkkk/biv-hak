@@ -48,7 +48,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: ERoutesNames.HOME_CLIENTS,
-            element: <div className="ml-3">Реестр клиентов(пустышка)</div>,
+            element: <div className="w-[1140px] mx-auto">Реестр клиентов(пустышка)</div>,
           },
         ],
       },

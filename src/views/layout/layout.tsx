@@ -22,7 +22,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <div className="mx-auto flex flex-col max-w-[1440px] space-y-2 h-screen overflow-hidden ">
+   <div className="mx-auto flex flex-col w-full px-[210px] space-y-2 h-screen overflow-x-hidden ">
       <header className="p-4 flex justify-between">
         <span className="font-bold">XddTeam :)</span>
         <Button variant="solid" color="primary" onClick={handleLogout}>
