@@ -3,6 +3,7 @@ import axios from "axios";
 import { authMethods } from ".";
 import { EAuthTypes } from "@utils/common";
 import { IAuthResponseData } from "../../models/common";
+import cookies from "js-cookie";
 
 export const registration = async (
   body: IRegisterRequestData,
@@ -68,4 +69,26 @@ export const authorizate = async (body: IAuthRequestData, type: EAuthTypes) => {
       };
     }
   }
+};
+
+export const getNewToken = async () => {
+  try {
+    const subdomain: Record<EAuthTypes, string> = {
+      [EAuthTypes.AGENT]: "api/agent/signin",
+      [EAuthTypes.COMPANY]: "/api/company/signin",
+    };
+    const token = cookies.get("refresh_token") || "";
+    const type = (cookies.get("type") || "") as EAuthTypes;
+
+    const { data, status } = await authMethods.refreshToken(subdomain[type], {
+      refreshToken: token,
+    });
+    if (status !== 200) {
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("access_token");
+      throw new Error("Invalid refresh token!");
+    }
+
+    return data;
+  } catch (err) {}
 };

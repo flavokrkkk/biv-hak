@@ -56,3 +56,8 @@ export interface IPartner {
   standing: string;
   statusDeal: string;
 }
+
+export interface IFilterParam {
+  key: string;
+  value: string;
+}

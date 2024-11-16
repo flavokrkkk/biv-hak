@@ -15,4 +15,6 @@ export const authMethods = {
     url: string,
     body: IAuthRequestData
   ): Promise<AxiosResponse<IAuthResponseData>> => axiosForAuth.post(url, body),
+  refreshToken: (url: string, body: { refreshToken: string }) =>
+    axiosForAuth.post(url),
 };

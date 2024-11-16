@@ -3,6 +3,7 @@ import { deleteTokens, getToken } from "@helpers/tokenHelper";
 import { EBaseUrls } from "@utils/api";
 import { EErrorsNames } from "@utils/errors";
 import axios, { CreateAxiosDefaults } from "axios";
+import { getNewToken } from "./authResponse/request";
 
 export const options: CreateAxiosDefaults = {
   baseURL: EBaseUrls.BASE_API_URL,
@@ -38,7 +39,7 @@ axiosWithAuth.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        //   await authService.getNewTokens()
+        await getNewToken();
         return axiosWithAuth.request(originalRequest);
       } catch (error) {
         if (catchError(error) === "jwt expired") deleteTokens();

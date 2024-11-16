@@ -1,7 +1,6 @@
 import {
   EditOutlined,
   PlusOutlined,
-  ToolOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { useActions } from "@hooks/useActions";
@@ -65,7 +64,7 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
       {
         title: "Действия",
         key: "action",
-        render: (_, record: IInsurance) => (
+        render: (_: any, record: IInsurance) => (
           <Space size="middle" className="flex justify-center">
             <Button
               icon={
@@ -80,14 +79,10 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
       },
     ];
   }, []);
-  console.log(dataSource);
   return (
     <div>
       <HomeInfoLayout value={searchValue} onChange={handleChange}>
         <div className="flex space-x-2 justify-end mb-3">
-          <Button variant="dashed" color="primary" icon={<PlusOutlined />}>
-            Добавить
-          </Button>
           <Button
             variant="solid"
             color="primary"

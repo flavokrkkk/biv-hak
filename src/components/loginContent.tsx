@@ -41,6 +41,7 @@ const LoginContent = () => {
     navigate(ERoutesNames.DEFAULT);
     cookies.set("access_token", data.accessToken);
     cookies.set("refresh_token", data.refreshToken);
+    cookies.set("type", loginType);
     saveData(data);
     return data;
   };

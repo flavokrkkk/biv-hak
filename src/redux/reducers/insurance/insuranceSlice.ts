@@ -1,5 +1,5 @@
 import { insuranceMethods } from "@api/insuranceResponse";
-import { ICreateInsuranceData, IInsurance } from "@models/common";
+import { ICreateInsuranceData, IFilterParam, IInsurance } from "@models/common";
 import {
   asyncThunkCreator,
   buildCreateSlice,
@@ -16,6 +16,7 @@ export interface InsuranceState {
   insurances: IInsurance[];
   insurancesFilter: IInsurance[];
   insurance: ICreateInsuranceData | null;
+  filterParam: Array<IFilterParam>;
   isLoading: boolean;
   error: string;
 }
@@ -25,6 +26,7 @@ const initialState: InsuranceState = {
   insurancesFilter: insurancedata,
   insurances: insurancedata,
   isLoading: false,
+  filterParam: [],
   error: "",
 };
 
@@ -84,14 +86,28 @@ export const insuranceSlice = createSliceWithThunks({
         );
       }
     ),
-    setFilterInsurances: create.reducer(
-      (state, { payload }: PayloadAction<string>) => {
-        console.log(payload);
-        state.insurancesFilter = state.insurances.filter((el) =>
-          Object.values(el).includes(payload)
+    setFilterInsurances: create.reducer((state) => {
+      state.insurancesFilter = state.insurances.filter((insurance) => {
+        return state.filterParam.every(
+          (el) => insurance[el.key as keyof typeof insurance] === el.value
         );
+      });
+    }),
+    setFilterParam: create.reducer(
+      (state, { payload }: PayloadAction<IFilterParam>) => {
+        const searchIndex = state.filterParam.findIndex(
+          (el) => el.key === payload.key
+        );
+        if (searchIndex !== -1) {
+          state.filterParam[searchIndex] = payload;
+        } else {
+          state.filterParam.push(payload);
+        }
       }
     ),
+    setCleanFilter: create.reducer((state) => {
+      state.insurancesFilter = state.insurances;
+    }),
   }),
 });
 
