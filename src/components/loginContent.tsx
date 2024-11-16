@@ -7,6 +7,7 @@ import { Button, Checkbox, Input, message } from "antd";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import cookies from "js-cookie";
+import { useActions } from "@hooks/useActions";
 
 const LoginContent = () => {
   const [loginType, setLoginType] = useState<EAuthTypes>(EAuthTypes.AGENT);
@@ -14,7 +15,7 @@ const LoginContent = () => {
     password: "",
     username: "",
   });
-
+  const { saveData } = useActions();
   const navigate = useNavigate();
 
   const handleChangeValue = useCallback(
@@ -40,6 +41,7 @@ const LoginContent = () => {
     navigate(ERoutesNames.DEFAULT);
     cookies.set("access_token", data.accessToken);
     cookies.set("refresh_token", data.refreshToken);
+    saveData(data);
     return data;
   };
 
