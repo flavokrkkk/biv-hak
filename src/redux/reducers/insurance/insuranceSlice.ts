@@ -84,6 +84,14 @@ export const insuranceSlice = createSliceWithThunks({
         );
       }
     ),
+    setFilterInsurances: create.reducer(
+      (state, { payload }: PayloadAction<string>) => {
+        console.log(payload);
+        state.insurancesFilter = state.insurances.filter((el) =>
+          Object.values(el).includes(payload)
+        );
+      }
+    ),
   }),
 });
 
