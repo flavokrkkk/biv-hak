@@ -12,7 +12,7 @@ export const partnersData: Array<IPartner> = [
   {
     id: 223,
     city: "Бостон",
-    name: "Яровицын Егор Викторович",
+    name: "Андреев Андрей Андреевич",
     polis: "ОСАГО",
     standing: "Старший агент",
     statusDeal: "Заморожен",
@@ -20,7 +20,7 @@ export const partnersData: Array<IPartner> = [
   {
     id: 343,
     city: "Бостон",
-    name: "Яровицын Егор Викторович",
+    name: "Магов Магомед Магомедович",
     polis: "ОСАГО",
     standing: "Старший агент",
     statusDeal: "Заморожен",
