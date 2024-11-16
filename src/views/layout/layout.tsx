@@ -40,7 +40,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
                 style={{ backgroundImage: "url(/panel.png)" }}
                 className="w-[1140px] h-[180px] "
               ></div>
-              {/* <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} className="mx-auto"/> */}
+
               <Tabs
                 defaultActiveKey="1"
                 items={tabData}
@@ -49,7 +49,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
               />
             </div>
           </div>
-          {children}
+          <div className="">{children}</div>
         </main>
       </div>
     </div>

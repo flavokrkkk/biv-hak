@@ -32,14 +32,13 @@ const HomeConstructorContent = () => {
     e.preventDefault();
     console.log(data)
     dispatch(createInsurance({...data,companyId:useSelector((state:RootState) => state.authReducer.user.id)}));
+
   };
 
   return (
     <>
       <div className="flex flex-col space-y-4 h-full p-4">
-        <section className="flex justify-end">
- 
-        </section>
+        <section className="flex justify-end"></section>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="bg-white flex justify-between p-5 ">
             <div className="flex flex-col w-full">
