@@ -29,6 +29,14 @@ export const routes = createBrowserRouter([
             path: ERoutesNames.HOME_REESTR,
             element: <div>Реестр договоров</div>,
           },
+          {
+            path: ERoutesNames.HOME_PARTNERS,
+            element: <div>Реестр партнеров</div>,
+          },
+          {
+            path: ERoutesNames.HOME_CLIENTS,
+            element: <div>Реестр клиентов</div>,
+          },
         ],
       },
       {
@@ -38,6 +46,22 @@ export const routes = createBrowserRouter([
       {
         path: ERoutesNames.LOGIN,
         element: <LoginPage />,
+      },
+      {
+        path: ERoutesNames.UNDERWRITING,
+        element: <div>UNDERWRITING</div>,
+      },
+      {
+        path: ERoutesNames.CUMULATION,
+        element: <div>CUMULATION</div>,
+      },
+      {
+        path: ERoutesNames.SETTINGS,
+        element: <div>SETTINGS</div>,
+      },
+      {
+        path: ERoutesNames.DOCUMENT,
+        element: <div>DOCUMENT</div>,
       },
       {
         path: "*",

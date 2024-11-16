@@ -3,13 +3,24 @@ import {
   ToolOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
+import { ICreateInsuranceData } from "@models/common";
 import { Button, DatePicker, Input, Select } from "antd";
 import Modal from "antd/es/modal/Modal";
 import { useState } from "react";
 
 const HomeConstructorContent = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [data, setData] = useState<ICreateInsuranceData>({
+    name: "",
+    description: "",
+    typeInsurance: "",
+    targetAudience: [""],
+    objectInsurance: "",
+    riskInsurance: "",
+    conditionsInsurance: "",
+    maxAmount: 0,
+    amount: 0,
+  });
   const toggleModal = () => setIsOpen((prevState) => !prevState);
 
   return (
@@ -40,23 +51,118 @@ const HomeConstructorContent = () => {
 
         <div className="bg-white flex justify-between p-5 space-x-4">
           <div className="flex flex-col space-y-2  w-full">
-            <h1 className="font-medium">О продукте</h1>
-            <div className="flex flex-col space-y-4">
-              <Input size="large" placeholder="Название" />
+            <h1 className="font-medium">Создание продукта</h1>
+            <div className="flex flex-col space-y-4  mr-auto mt-2">
+              <div className="w-full flex gap-10">
+                <Input
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Название продукта"
+                  value={data.name}
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                />
+                <div>Название продукта</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Input
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Описание"
+                  value={data.description}
+                  onChange={(e) =>
+                    setData({ ...data, description: e.target.value })
+                  }
+                />
+                <div>Описание</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Select
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Тип страхования"
+                  value={data.typeInsurance}
+                  // onChange={e => setData({...data, name:e.target.value})}
+                />
+                <div>Тип страхования</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Select
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Целевая аудитория"
+                  value={data.targetAudience}
+                />
+                <div>Целевая аудитория</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Select
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Объект страхования"
+                  value={data.objectInsurance}
+                />
+                <div>Объект страхования</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Select
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Риск страхования"
+                  value={data.riskInsurance}
+                />
+                <div>Риск страхования</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Input
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Условия покрытия"
+                  value={data.conditionsInsurance}
+                  onChange={(e) =>
+                    setData({ ...data, conditionsInsurance: e.target.value })
+                  }
+                />
+                <div>Условия покрытия</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Input
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Максимальная страховая сумма"
+                  type="number"
+                  value={data.maxAmount}
+                  onChange={(e) =>
+                    setData({ ...data, maxAmount: parseInt(e.target.value) })
+                  }
+                />
+                <div>Максимальная страховая сумма</div>
+              </div>
+              <div className="w-full flex gap-10">
+                <Input
+                className="w-[30vw]"
+                  size="large"
+                  placeholder="Стоимость страхования"
+                  type="number"
+                  value={data.amount}
+                  onChange={(e) =>
+                    setData({ ...data, amount: parseInt(e.target.value) })
+                  }
+                />
+                <div>Стоимость страхования</div>
+              </div>
+              {/* <Input size="large" placeholder="Список исключения" /> */}
+              <DatePicker size="large" placeholder="" />
               <DatePicker size="large" />
-              <DatePicker size="large" />
-              <Select size="large" />
-              <Select size="large" />
             </div>
           </div>
-          <div className="flex flex-col space-y-2 w-full">
+          {/* <div className="flex flex-col space-y-2 w-full">
             <h1 className="font-medium">Серия и номер полиса</h1>
             <div className="flex flex-col space-y-4">
               <Input size="large" placeholder="Название" />
               <Input size="large" placeholder="Название" />
               <Input size="large" placeholder="Название" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Modal open={isOpen} onCancel={toggleModal} footer={null}>
@@ -66,7 +172,7 @@ const HomeConstructorContent = () => {
           <section className="flex space-x-2">
             <div className="flex flex-col space-y-4 w-full">
               <Input size="large" placeholder="Название" />
-              <Select size="large" />
+              <Select size="large" placeholder="" />
               <Select size="large" />
             </div>
             <div className="flex flex-col space-y-4 w-full">

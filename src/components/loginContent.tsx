@@ -77,7 +77,7 @@ const LoginContent = () => {
               size="large"
               placeholder="Username"
               name="username"
-              type="password"
+              type="text"
               value={requestValue.username}
               onChange={handleChangeValue}
             />
