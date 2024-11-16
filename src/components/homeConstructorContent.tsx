@@ -31,7 +31,7 @@ const HomeConstructorContent = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data);
+    console.log(data,user?.id);
     if (user?.id) {
       createInsurance({ ...data, companyId: user?.id });
     }
