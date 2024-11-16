@@ -20,7 +20,6 @@ export interface ICreateInsuranceData {
   name: string;
   description: string;
   typeInsurance: string;
-  targetAudience: any[];
   objectInsurance: string;
   riskInsurance: string;
   conditionsInsurance: string;

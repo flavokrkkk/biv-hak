@@ -14,7 +14,6 @@ const HomeConstructorContent = () => {
     name: "",
     description: "",
     typeInsurance: "",
-    targetAudience: [""],
     objectInsurance: "",
     riskInsurance: "",
     conditionsInsurance: "",
@@ -84,15 +83,6 @@ const HomeConstructorContent = () => {
                   // onChange={e => setData({...data, name:e.target.value})}
                 />
                 <div>Тип страхования</div>
-              </div>
-              <div className="w-full flex gap-10">
-                <Select
-                className="w-[30vw]"
-                  size="large"
-                  placeholder="Целевая аудитория"
-                  value={data.targetAudience}
-                />
-                <div>Целевая аудитория</div>
               </div>
               <div className="w-full flex gap-10">
                 <Select
