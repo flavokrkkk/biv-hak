@@ -7,6 +7,9 @@ import { Button, Checkbox, Input, message } from "antd";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import cookies from "js-cookie";
+import { authActions } from "@redux/reducers/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useActions } from "@hooks/useActions";
 
 export const RegisterContent = () => {
   const [registerType, setRegisterType] = useState<EAuthTypes>(
@@ -18,6 +21,8 @@ export const RegisterContent = () => {
     email: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const { saveData } = useActions();
   const handleChangeValue = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setRequestValue((prevState) => ({
@@ -41,6 +46,7 @@ export const RegisterContent = () => {
     navigate(ERoutesNames.DEFAULT);
     cookies.set("access_token", data.accessToken);
     cookies.set("refresh_token", data.refreshToken);
+    saveData(data);
     return data;
   };
 

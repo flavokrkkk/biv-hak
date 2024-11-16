@@ -34,8 +34,9 @@ export interface ICreateInsuranceData {
   conditionsInsurance: string;
   maxAmount: number;
   amount: number;
-  expiresIn:Date | null;
-  duration:number
+  expiresIn: Date | null;
+  duration: number;
+  companyId:number
 }
 
 export interface IPartner {

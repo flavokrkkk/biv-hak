@@ -5,15 +5,15 @@ import {
 } from "@ant-design/icons";
 import { ICreateInsuranceData } from "@models/common";
 import { createInsurance } from "@redux/reducers/insurance/insuranceSlice";
-import { AppDispatch } from "@store/store";
+import { AppDispatch, RootState } from "@store/store";
 import { Button, DatePicker, Input, Select } from "antd";
 import Modal from "antd/es/modal/Modal";
 import { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomeConstructorContent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState<ICreateInsuranceData>({
+  const [data, setData] = useState<Omit<ICreateInsuranceData,'companyId'>>({
     name: "",
     description: "",
     objectInsurance: "",
@@ -23,14 +23,15 @@ const HomeConstructorContent = () => {
     amount: 0,
     expiresIn: null,
     duration: 0,
+    
   });
   const toggleModal = () => setIsOpen((prevState) => !prevState);
   const dispatch: AppDispatch = useDispatch();
-
+  
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createInsurance(data));
     console.log(data)
+    dispatch(createInsurance({...data,companyId:useSelector((state:RootState) => state.authReducer.user.id)}));
   };
 
   return (

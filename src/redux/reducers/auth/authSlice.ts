@@ -12,9 +12,12 @@ export const authSlice = createSliceWithThunks({
   name: "authSlice",
   initialState,
   reducers: (create) => ({
-    getAccessToken: create.asyncThunk(async () => {
-      try {
-      } catch (err) {}
+    saveData: create.reducer((state,payload:any) => {
+        state.user = payload
     }),
   }),
 });
+
+
+export const authActions = authSlice.actions;
+export const authReducer = authSlice.reducer;
