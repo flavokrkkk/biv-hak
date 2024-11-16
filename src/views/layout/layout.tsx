@@ -18,11 +18,11 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   const handleLogout = () => {
     deleteTokens();
-    navigate(0)
+    navigate(0);
   };
 
   return (
-   <div className="mx-auto flex flex-col w-full px-[210px] space-y-2 h-screen overflow-x-hidden ">
+    <div className="mx-auto flex flex-col w-full px-[210px] space-y-2 h-screen overflow-x-hidden">
       <header className="p-4 flex justify-between">
         <span className="font-bold">XddTeam :)</span>
         <Button variant="solid" color="primary" onClick={handleLogout}>
@@ -34,20 +34,17 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
           <AsideContent routesData={routesData} />
         </aside>
         <main className=" w-full">
-          <div className="flex justify-center">
-            <div className="flex flex-col space-y-3">
-              <div
-                style={{ backgroundImage: "url(/panel.png)" }}
-                className="w-[1140px] h-[180px] "
-              ></div>
-
-              <Tabs
-                defaultActiveKey="1"
-                items={tabData}
-                onChange={onChange}
-                className="ml-2 "
-              />
-            </div>
+          <div
+            style={{ backgroundImage: "url(/panel.png)" }}
+            className="xl:w-[1140px] lg:w-[800px] ml-10 h-[171px] "
+          ></div>
+          <div className="flex justify-center mr-auto w-fit ml-10 mt-4" >
+            <Tabs
+              defaultActiveKey="1"
+              items={tabData}
+              onChange={onChange}
+              className="ml-2 "
+            />
           </div>
           <div className="">{children}</div>
         </main>
