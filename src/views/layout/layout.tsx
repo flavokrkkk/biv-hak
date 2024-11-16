@@ -31,12 +31,19 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
         <main className=" w-full">
           <div className="flex justify-center">
             <div className="flex flex-col space-y-3">
-              <div style={{backgroundImage:"url(/panel.png)"}} className="w-[1140px] h-[180px] "></div>
-              {/* <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} className="mx-auto"/> */}
-              <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} className="ml-2 "/>
+              <div
+                style={{ backgroundImage: "url(/panel.png)" }}
+                className="w-[1140px] h-[180px] "
+              ></div>
+              <Tabs
+                defaultActiveKey="1"
+                items={tabData}
+                onChange={onChange}
+                className="ml-2 "
+              />
             </div>
           </div>
-          {children}
+          <div className="">{children}</div>
         </main>
       </div>
     </div>

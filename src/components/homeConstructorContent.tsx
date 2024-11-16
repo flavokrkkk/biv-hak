@@ -30,15 +30,13 @@ const HomeConstructorContent = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(createInsurance(data));
-    console.log(data)
+    console.log(data);
   };
 
   return (
     <>
       <div className="flex flex-col space-y-4 h-full p-4">
-        <section className="flex justify-end">
- 
-        </section>
+        <section className="flex justify-end"></section>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="bg-white flex justify-between p-5 ">
             <div className="flex flex-col w-full">
