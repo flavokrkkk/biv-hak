@@ -37,7 +37,7 @@ const HomeConstructorContent = () => {
 
   return (
     <>
-      <div className="flex flex-col space-y-4 h-full p-4">
+      <div className="flex flex-col space-y-4 h-full p-4 w-[1140px] mx-auto">
         <section className="flex justify-end"></section>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="bg-white flex justify-between p-5 ">
@@ -53,7 +53,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Название продукта"
                     value={data.name}
@@ -69,7 +69,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Описание"
                     value={data.description}
@@ -86,7 +86,7 @@ const HomeConstructorContent = () => {
                     </span>
                   </label>
                   <Select
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Объект страхования"
                     value={data.objectInsurance}
@@ -100,7 +100,7 @@ const HomeConstructorContent = () => {
                     </span>
                   </label>
                   <Select
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Риск страхования"
                     value={data.riskInsurance}
@@ -115,7 +115,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Условия покрытия"
                     value={data.conditionsInsurance}
@@ -137,7 +137,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Максимальная страховая сумма"
                     type="number"
@@ -156,7 +156,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Стоимость страхования"
                     type="number"
@@ -176,7 +176,7 @@ const HomeConstructorContent = () => {
                   </label>
                   <Input
                     required
-                    className="w-[30vw]"
+                    className="w-[27vw]"
                     size="large"
                     placeholder="Длительность страхования (в днях)"
                     type="number"
@@ -186,7 +186,7 @@ const HomeConstructorContent = () => {
                     }
                   />
                 </div>
-                <div className="flex flex-col space-y-1 w-full">
+                <div className="flex flex-col space-y-1 w-[27vw]">
                   <label>Дата окончания</label>
                   <DatePicker
                     value={data.expiresIn}

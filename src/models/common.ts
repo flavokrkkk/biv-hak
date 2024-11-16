@@ -44,6 +44,5 @@ export interface IPartner {
   name: string;
   city: string;
   standing: string;
-  polis: string;
   statusDeal: string;
 }

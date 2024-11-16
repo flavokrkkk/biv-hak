@@ -11,10 +11,10 @@ interface IHomePartnersContent {
 
 const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   return (
-    <main className="px-4">
-      <div className="flex space-x-14 font-medium mb-4 px-6 ">
+    <div className="px-4 w-[1140px] mx-auto">
+      <div className="flex space-x-40 font-medium mb-4 px-6 ">
         <span>Информация о работнике</span>
-        <span>Полис</span>
+
         <span>Статус</span>
       </div>
       <div className="flex flex-col space-y-2">
@@ -37,9 +37,8 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
                   <span>{partner.city}</span>
                   <span>ID:{partner.id}</span>
                 </div>
-                <div className="flex space-x-20">
+                <div className="flex space-x-56">
                   <span>{partner.standing}</span>
-                  <span>{partner.polis}</span>
                   <Button>{partner.statusDeal}</Button>
                 </div>
               </section>
@@ -47,7 +46,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 };
 
