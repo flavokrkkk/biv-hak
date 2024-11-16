@@ -1,9 +1,11 @@
 import FilterBar from "@components/filterBar";
 
 export const enum EDownPanelKeys {
-  FILTER = "/home/constructor",
+  CONSTRUCTOR = "/home/constructor",
+  PARTNERS = "/home/partners",
 }
 
 export const downPanel: Record<EDownPanelKeys, JSX.Element> = {
-  [EDownPanelKeys.FILTER]: <FilterBar />,
+  [EDownPanelKeys.CONSTRUCTOR]: <FilterBar />,
+  [EDownPanelKeys.PARTNERS]: <FilterBar />,
 };

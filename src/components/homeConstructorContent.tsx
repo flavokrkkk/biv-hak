@@ -34,7 +34,7 @@ const HomeConstructorContent = () => {
 
   return (
     <>
-      <div className="flex flex-col space-y-4 h-full">
+      <div className="flex flex-col space-y-4 h-full p-4">
         <section className="flex justify-end">
           <div className="flex space-x-2">
             <Button
@@ -57,7 +57,6 @@ const HomeConstructorContent = () => {
             </Button>
           </div>
         </section>
-
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="bg-white flex justify-between p-5 ">
             <div className="flex flex-col w-full">

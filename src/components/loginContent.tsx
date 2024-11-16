@@ -38,7 +38,8 @@ const LoginContent = () => {
     if (status !== 200) return message.error("Проверьте данные!");
     message.success("Успешный вход");
     navigate(ERoutesNames.DEFAULT);
-    cookies.set("token", "test");
+    cookies.set("access_token", data.accessToken);
+    cookies.set("refresh_token", data.refreshToken);
     return data;
   };
 

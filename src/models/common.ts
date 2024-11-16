@@ -16,6 +16,16 @@ export interface IAuthRequestData {
   password: string;
 }
 
+export interface IAuthResponseData {
+  refreshToken: string;
+  id: 0;
+  username: string;
+  email: string;
+  role: string;
+  accessToken: string;
+  tokenType: string;
+}
+
 export interface ICreateInsuranceData {
   name: string;
   description: string;
@@ -26,4 +36,13 @@ export interface ICreateInsuranceData {
   amount: number;
   expiresIn:Date | null;
   duration:number
+}
+
+export interface IPartner {
+  id: number;
+  name: string;
+  city: string;
+  standing: string;
+  polis: string;
+  statusDeal: string;
 }
