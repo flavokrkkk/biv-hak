@@ -11,14 +11,15 @@ export const tabData: TabsProps["items"] = [
     key: "2",
     label: "Реестр договоров",
     text: ERoutesNames.HOME_REESTR,
+
   },
   {
-    key: "4",
+    key: "3",
     label: "Реестр партнеров",
     text: ERoutesNames.HOME_PARTNERS
   },
   {
-    key: "5",
+    key: "4",
     label: "Реестр клиентов",
     text: ERoutesNames.HOME_CLIENTS
   },

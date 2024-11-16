@@ -30,32 +30,14 @@ const HomeConstructorContent = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(createInsurance(data));
+    console.log(data)
   };
 
   return (
     <>
       <div className="flex flex-col space-y-4 h-full p-4">
         <section className="flex justify-end">
-          <div className="flex space-x-2">
-            <Button
-              variant="solid"
-              color="primary"
-              icon={<PlusOutlined />}
-              onClick={toggleModal}
-            >
-              Добавить
-            </Button>
-            <Button
-              variant="solid"
-              color="primary"
-              icon={<UnorderedListOutlined />}
-            >
-              Выбрать
-            </Button>
-            <Button variant="solid" color="primary" icon={<ToolOutlined />}>
-              Редактировать
-            </Button>
-          </div>
+ 
         </section>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className="bg-white flex justify-between p-5 ">

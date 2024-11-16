@@ -48,7 +48,6 @@ export const insuranceSlice = createSliceWithThunks({
       {
         pending: (state) => {
           state.isLoading = true;
-          //
         },
         fulfilled: (
           state,
@@ -56,6 +55,7 @@ export const insuranceSlice = createSliceWithThunks({
         ) => {
           state.insurance = payload;
           state.isLoading = false;
+          message.success('Страховой продукт создан!')
         },
         rejected: (state, { payload }: PayloadAction<string | undefined>) => {
           state.error = payload || "Неизвестная ошибка";

@@ -1,4 +1,5 @@
 import { AsideContent } from "@components/asideContent";
+import { deleteTokens } from "@helpers/tokenHelper";
 import { routesData } from "@utils/route";
 import { tabData } from "@utils/tabdata";
 import { Button, Tabs, TabsProps } from "antd";
@@ -18,8 +19,8 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="mx-auto flex flex-col max-w-[1440px] space-y-2 h-screen overflow-hidden ">
       <header className="p-4 flex justify-between">
-        <span className="font-bold">XddTeam</span>
-        <Button variant="solid" color="primary">
+        <span className="font-bold">XddTeam :)</span>
+        <Button variant="solid" color="primary" onClick={() => deleteTokens()}>
           Выйти
         </Button>
       </header>
@@ -29,7 +30,11 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
         </aside>
         <main className=" w-full">
           <div className="flex justify-center">
-            <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} />
+            <div className="flex flex-col space-y-3">
+              <div style={{backgroundImage:"url(/panel.png)"}} className="w-[1140px] h-[180px] "></div>
+              {/* <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} className="mx-auto"/> */}
+              <Tabs defaultActiveKey="1" items={tabData} onChange={onChange} className="ml-2 "/>
+            </div>
           </div>
           {children}
         </main>

@@ -10,7 +10,7 @@ interface IHomeInfoLayout {
 const HomeInfoLayout: FC<IHomeInfoLayout> = ({ children, onChange, value }) => {
   return (
     <div className="mt-1">
-      <div className="w-full flex flex-col space-y-3 ">
+      <div className="w-[95%] mx-auto flex flex-col space-y-3 ">
         <Search placeholder="Поиск..." value={value} onChange={onChange} />
         {children}
       </div>
