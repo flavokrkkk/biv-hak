@@ -1,3 +1,4 @@
+import HomeConstructorPage from "@pages/home/homeConstructorPage";
 import { LoginPage } from "@pages/loginPage";
 import { RegisterPage } from "@pages/registerPage";
 import { ERoutesNames } from "@utils/route";
@@ -14,11 +15,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: ERoutesNames.DEFAULT,
-        element: (
-          <div>
-            <Outlet />
-          </div>
-        ),
+        element: <Outlet />,
         children: [
           {
             path: "",
@@ -26,7 +23,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: ERoutesNames.HOME_CONSTRUCTOR,
-            element: <div>homeconstructor</div>,
+            element: <HomeConstructorPage />,
           },
           {
             path: ERoutesNames.HOME_REESTR,

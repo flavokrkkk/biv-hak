@@ -1,0 +1,95 @@
+import {
+  PlusOutlined,
+  ToolOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+import { Button, DatePicker, Input, Select } from "antd";
+import Modal from "antd/es/modal/Modal";
+import { useState } from "react";
+
+const HomeConstructorContent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => setIsOpen((prevState) => !prevState);
+
+  return (
+    <>
+      <div className="flex flex-col space-y-4 h-full">
+        <section className="flex justify-end">
+          <div className="flex space-x-2">
+            <Button
+              variant="solid"
+              color="primary"
+              icon={<PlusOutlined />}
+              onClick={toggleModal}
+            >
+              Добавить
+            </Button>
+            <Button
+              variant="solid"
+              color="primary"
+              icon={<UnorderedListOutlined />}
+            >
+              Выбрать
+            </Button>
+            <Button variant="solid" color="primary" icon={<ToolOutlined />}>
+              Редактировать
+            </Button>
+          </div>
+        </section>
+
+        <div className="bg-white flex justify-between p-5 space-x-4">
+          <div className="flex flex-col space-y-2  w-full">
+            <h1 className="font-medium">О продукте</h1>
+            <div className="flex flex-col space-y-4">
+              <Input size="large" placeholder="Название" />
+              <DatePicker size="large" />
+              <DatePicker size="large" />
+              <Select size="large" />
+              <Select size="large" />
+            </div>
+          </div>
+          <div className="flex flex-col space-y-2 w-full">
+            <h1 className="font-medium">Серия и номер полиса</h1>
+            <div className="flex flex-col space-y-4">
+              <Input size="large" placeholder="Название" />
+              <Input size="large" placeholder="Название" />
+              <Input size="large" placeholder="Название" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Modal open={isOpen} onCancel={toggleModal} footer={null}>
+        <section className="flex flex-col space-y-4">
+          <h1 className="font-medium text-xl">Добавление параметра</h1>
+
+          <section className="flex space-x-2">
+            <div className="flex flex-col space-y-4 w-full">
+              <Input size="large" placeholder="Название" />
+              <Select size="large" />
+              <Select size="large" />
+            </div>
+            <div className="flex flex-col space-y-4 w-full">
+              <Select size="large" placeholder="Выбрать вид" />
+            </div>
+          </section>
+          <div>
+            <Button variant="outlined" color="primary" icon={<PlusOutlined />}>
+              Добавить
+            </Button>
+          </div>
+        </section>
+        <div className="mt-16 flex space-x-2">
+          <Button variant="solid" color="primary">
+            Сохраниь
+          </Button>
+          <Button variant="solid" color="primary">
+            Отмена
+          </Button>
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export default HomeConstructorContent;

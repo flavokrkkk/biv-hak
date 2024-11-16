@@ -2,6 +2,7 @@ export interface INavigateData {
   id: number;
   title: string;
   pathname: string;
+  icon: JSX.Element;
 }
 
 export interface IRegisterRequestData {

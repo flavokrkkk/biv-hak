@@ -11,17 +11,22 @@ export const AsideContent: FC<IAsideContent> = ({ routesData }) => {
   const locate = useLocation();
 
   return (
-    <div className="flex h-screen flex-grow py-2 space-y-3 flex-col  w-[200px] ">
-      <div className="flex text-[14px]  justify-center flex-col h-[262px] p-2 space-y-3 rounded-3xl  bg-gray-200 ">
+    <div className="flex h-screen flex-grow py-2 space-y-3 flex-col  w-[210px] ">
+      <div className="flex text-[14px]  justify-center flex-col h-[262px] p-2 space-y-3 rounded-lg bg-white  shadow-md">
         {routesData.map((route) => (
           <NavLink
             key={route.id}
             to={route.pathname}
             className={({ isActive }) =>
-              isActive ? "bg-gray-400 p-1 px-2 rounded-3xl text-white" : "p-2"
+              isActive
+                ? "bg-[#CDE2FF] p-[6px] px-[10px] rounded-lg flex items-center"
+                : "p-2"
             }
           >
-            {route.title}
+            <div className="flex space-x-2">
+              <span>{route.icon}</span>
+              <span>{route.title}</span>
+            </div>
           </NavLink>
         ))}
       </div>
