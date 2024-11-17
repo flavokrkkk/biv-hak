@@ -1,12 +1,10 @@
 import { EditOutlined } from "@ant-design/icons";
 import { partnerMethods } from "@api/partnerResponse";
-import CarContact from "@components/contractsContent/carContact";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
-import { IInsurance, IInsuranceResponseData } from "@models/common";
+import { IInsuranceResponseData } from "@models/common";
 import { insureSelector, partnersSelector } from "@redux/selectors";
 import { insurancedata } from "@utils/insurancedata";
-import { ERoutesNames } from "@utils/route";
 import {
   Button,
   Checkbox,
@@ -18,8 +16,7 @@ import {
   TabsProps,
 } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HomePartnersDetailPage = () => {
   const { id } = useParams();
@@ -28,7 +25,7 @@ const HomePartnersDetailPage = () => {
   const [listData, setListData] = useState<any | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { setSelectInsurances } = useActions();
-  const {selectInsurance} = useAppSelector(insureSelector)
+  const { selectInsurance } = useAppSelector(insureSelector);
 
   const dataColumns = useMemo(() => {
     return [
@@ -81,29 +78,6 @@ const HomePartnersDetailPage = () => {
     ];
   }, []);
 
-  const tabData: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Автомобиль",
-      children: <CarContact />,
-    },
-    {
-      key: "2",
-      label: "Документы",
-      children: "Информация об документе",
-    },
-    {
-      key: "4",
-      label: "Стоимость",
-      children: "Информация о стоимость",
-    },
-    {
-      key: "5",
-      label: "Оплата",
-      children: "Информация об оплата",
-    },
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
@@ -128,7 +102,7 @@ const HomePartnersDetailPage = () => {
     fetchData();
   }, [id]);
 
-  if (isEdit ) {
+  if (isEdit) {
     return (
       <div className="flex flex-col space-y-5 px-4 w-[1140px] mx-auto ">
         <div className="flex justify-between">

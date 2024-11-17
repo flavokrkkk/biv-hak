@@ -57,7 +57,7 @@ export const RegisterContent = () => {
         onSubmit={onFormSubmit}
       >
         <div className="flex justify-center">
-          <LogoIcon />
+          <img src="/public/frame2.png" height={100} width={100} />
         </div>
         <h1 className="text-3xl font-semibold text-center">
           Зарегистрироваться как

@@ -18,10 +18,16 @@ export const HomeContractsContent = () => {
     setSearchInsurances(event.target.value);
   };
 
-  const dataSource = useMemo(
-    () => insurancesFilter.map((data) => ({ ...data, key: `${data.id}` })),
-    [insurancesFilter.length, insurancesFilter]
-  );
+  const dataSource = useMemo(() => {
+    const sss = insurancesFilter.map((data) => ({
+      ...data,
+      key: `${data.id}`,
+      expiresIn: `${new Date(data.expiresIn).getDate()}.${
+        new Date(data.expiresIn).getMonth() + 1
+      }.${new Date(data.expiresIn).getFullYear()}`,
+    }));
+    return sss;
+  }, [insurancesFilter.length, insurancesFilter]);
 
   const dataColumns = useMemo(() => {
     return [

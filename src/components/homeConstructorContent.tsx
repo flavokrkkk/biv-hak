@@ -1,10 +1,10 @@
 import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
   CloseOutlined,
   EyeInvisibleOutlined,
   PlusOutlined,
   SaveOutlined,
-  ToolOutlined,
-  UnorderedListOutlined,
 } from "@ant-design/icons";
 import { rootCheck } from "@helpers/rootCheck";
 import { useActions } from "@hooks/useActions";
@@ -12,20 +12,12 @@ import { useAppSelector } from "@hooks/useAppSelector";
 import { ICreateInsuranceData } from "@models/common";
 import { authSelector } from "@redux/selectors";
 import { objectInsurance, risks } from "@utils/insurancedata";
-import {
-  Button,
-  DatePicker,
-  Input,
-  message,
-  Modal,
-  Select,
-  Steps,
-  Switch,
-} from "antd";
+import { Button, Input, message, Modal, Select, Steps, Switch } from "antd";
 import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
 import HomeConstructorPanel from "./homeConstructorPanel";
 import { DefaultOptionType } from "antd/es/select";
 import ConstructorForm from "./constructorForm";
+import CastomizeForm from "./castomizeForm";
 
 const HomeConstructorContent = () => {
   const [isOpen, setOpen] = useState(false);
@@ -47,6 +39,10 @@ const HomeConstructorContent = () => {
   );
 
   const [parametres, addParametres] = useState<
+    { value: string; private: string }[]
+  >([]);
+
+  const [saveParametres, setSaveParametres] = useState<
     { value: string; private: string }[]
   >([]);
 
@@ -82,6 +78,14 @@ const HomeConstructorContent = () => {
     addParametres((prevState) => prevState.filter((_, i) => i !== +index));
   };
 
+  const next = () => {
+    setCurrent(current + 1);
+  };
+
+  const prev = () => {
+    setCurrent(current - 1);
+  };
+
   const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setParamsValue((prevState) => ({
       ...prevState,
@@ -101,14 +105,16 @@ const HomeConstructorContent = () => {
     }));
   }, []);
 
-  //
-
   const toggleModal = useCallback(() => {
     setOpen((prevState) => !prevState);
   }, []);
 
   const handleChangeDate = (e: Date) => {
     setData((prevState) => ({ ...prevState, expiresIn: e }));
+  };
+
+  const handleSaveCastomizeField = () => {
+    setSaveParametres(parametres);
   };
 
   const handleChangeSelect = (value: string, key: string) => {
@@ -136,6 +142,7 @@ const HomeConstructorContent = () => {
   const steps = [
     {
       title: "First",
+      key: "1",
       content: (
         <ConstructorForm
           data={data}
@@ -149,254 +156,41 @@ const HomeConstructorContent = () => {
     },
     {
       title: "Second",
-      content: (
-        <ConstructorForm
-          data={data}
-          options={{ insurance, risksOptions }}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          handleChangeDate={handleChangeDate}
-          handleChangeSelect={handleChangeSelect}
-        />
-      ),
+      key: "2",
+      content: <CastomizeForm parametres={saveParametres} />,
     },
-    {
-      title: "Last",
-      content: (
-        <ConstructorForm
-          data={data}
-          options={{ insurance, risksOptions }}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          handleChangeDate={handleChangeDate}
-          handleChangeSelect={handleChangeSelect}
-        />
-      ),
-    },
-  ].map((item) => ({
-    key: item.title,
-    title: item.title,
-    content: item.content,
-  }));
-
-  const next = () => {
-    setCurrent(current + 1);
-  };
-
-  const prev = () => {
-    setCurrent(current - 1);
-  };
+  ];
 
   return (
     <>
       <div className="w-[1140px] mx-auto flex flex-col space-y-3 ">
         {checkRoot && <HomeConstructorPanel toggleModal={toggleModal} />}
         <Steps current={current} items={steps} />
-        {steps[current].content}
-        <div style={{ marginTop: 24 }}>
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button
-              type="primary"
-              onClick={() => message.success("Processing complete!")}
-            >
-              Done
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-              Previous
-            </Button>
-          )}
-        </div>
-        {/* <ConstructorForm
-          data={data}
-          options={{ insurance, risksOptions }}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          handleChangeDate={handleChangeDate}
-          handleChangeSelect={handleChangeSelect}
-        /> */}
-        {/* <form onSubmit={onSubmit}>
-          <div className="bg-white flex justify-between p-6 rounded-lg space-x-4">
-            <div className="flex flex-col w-full">
-              <h1 className="font-medium text-2xl mb-4">О продуктe</h1>
-              <div className="mr-auto flex flex-col space-y-3">
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Название продукта
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Название продукта"
-                    value={data.name}
-                    name="name"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="w-full flex  flex-col space-y-1">
-                  <label>
-                    Описание
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Описание"
-                    name="description"
-                    value={data.description}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="w-full flex flex-col space-y-1 ">
-                  <label>
-                    Объект страхования
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Select
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Объект страхования"
-                    onChange={(value) =>
-                      handleChangeSelect(value, "objectInsurance")
-                    }
-                    value={data.objectInsurance}
-                    options={insurance}
-                  />
-                </div>
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Риск страхования
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Select
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Риск страхования"
-                    options={risksOptions}
-                    value={data.riskInsurance}
-                    onChange={(value) =>
-                      handleChangeSelect(value, "riskInsurance")
-                    }
-                  />
-                </div>
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Условия покрытия
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    name="conditionsInsurance"
-                    placeholder="Условия покрытия"
-                    value={data.conditionsInsurance}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col  w-full space-y-4 mt-12">
-              <div className=" flex flex-col space-y-3">
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Максимальная страховая сумма
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Максимальная страховая сумма"
-                    type="number"
-                    name="maxAmount"
-                    defaultValue={data.maxAmount}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Стоимость страхования
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Стоимость страхования"
-                    type="number"
-                    name="amount"
-                    value={data.amount}
-                    onChange={handleChange}
-                  />
-                </div>
 
-                <div className="w-full flex flex-col space-y-1">
-                  <label>
-                    Длительность страхования (в днях)
-                    <span className="text-red-700 font-semibold text-base">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    required
-                    className="w-[27vw]"
-                    size="large"
-                    placeholder="Длительность страхования (в днях)"
-                    type="number"
-                    name="duration"
-                    defaultValue={data.duration}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex flex-col space-y-1 w-[27vw]">
-                  <label>Дата окончания</label>
-                  <DatePicker
-                    value={data.expiresIn}
-                    size="large"
-                    name="expiresIn"
-                    placeholder=""
-                    onChange={handleChangeDate}
-                  />
-                </div>
-              </div>
-            </div>
+        <div>
+          <div className="flex justify-center mb-3">
+            {current < steps.length - 1 && (
+              <Button type="primary" onClick={next}>
+                <ArrowLeftOutlined />
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button
+                type="primary"
+                onClick={() => message.success("Processing complete!")}
+              >
+                <ArrowLeftOutlined />
+              </Button>
+            )}
+            {current > 0 && (
+              <Button className="ml-2" onClick={prev}>
+                <ArrowRightOutlined />
+              </Button>
+            )}
           </div>
-          <div className=" w-full mt-5">
-            <Button
-              className="w-full"
-              variant="dashed"
-              color="primary"
-              size="large"
-              htmlType="submit"
-            >
-              Сохранить пресет
-            </Button>
-          </div>
-        </form> */}
+
+          {steps[current].content}
+        </div>
       </div>
 
       <Modal open={isOpen} onCancel={toggleModal} footer={null}>
@@ -455,7 +249,12 @@ const HomeConstructorContent = () => {
           ))}
         </section>
         <div className="mt-16 flex space-x-2">
-          <Button variant="solid" color="primary" icon={<SaveOutlined />}>
+          <Button
+            variant="solid"
+            color="primary"
+            icon={<SaveOutlined />}
+            onClick={handleSaveCastomizeField}
+          >
             Сохраниь
           </Button>
           <Button variant="solid" color="primary">

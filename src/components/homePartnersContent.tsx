@@ -5,13 +5,10 @@ import {
   PlusCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { insuranceMethods } from "@api/insuranceResponse";
 import { partnerMethods } from "@api/partnerResponse";
-import { IInsurance, IPartner } from "@models/common";
-import { ERoutesNames } from "@utils/route";
+import { IPartner } from "@models/common";
 import { Button, Input, message, Modal } from "antd";
-import React, { FC, FormEvent, useCallback, useState } from "react";
-import { Link } from "react-router-dom";
+import { FC, FormEvent, useCallback, useState } from "react";
 import PartnersList from "./partnersList";
 
 interface IHomePartnersContent {
@@ -21,7 +18,7 @@ interface IHomePartnersContent {
 const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [partnerLogin, setPartnerLogin] = useState<string>("");
-  
+
   const toggle = useCallback(() => {
     setIsOpen(!isOpen);
   }, [isOpen]);
@@ -73,7 +70,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
             onChange={(e) => handleChangePartnerId(e.target.value)}
           />
           <div className="ml-auto w-fit flex space-x-2 mt-3">
-            <Button className=" mt-2 ml-auto" onClick={() => toggle()}>
+            <Button className=" mt-2 ml-auto" onClick={toggle}>
               Отменить
             </Button>
             <Button
@@ -88,7 +85,6 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
       <div className="flex justify-between font-medium mb-4 px-6 w-full ">
         <div className="flex space-x-40">
           <span>Информация о работнике</span>
-
         </div>
         <PlusOutlined className="ml-auto cursor-pointer" onClick={toggle} />
       </div>
