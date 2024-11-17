@@ -18,4 +18,8 @@ export const partnerMethods = {
 
   getAllAgents: (url: string): Promise<AxiosResponse<Array<IPartner>>> =>
     axiosWithAuth.get(url),
+
+  update:(url: string,data:any):Promise<AxiosResponse<Array<any>>> => {
+    // axiosWithAuth.
+  }
 };

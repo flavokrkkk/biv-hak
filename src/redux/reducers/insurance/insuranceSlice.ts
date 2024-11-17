@@ -141,7 +141,7 @@ export const insuranceSlice = createSliceWithThunks({
       async (requestData: IInsuranceResponseData, { rejectWithValue }) => {
         try {
           const { data } = await insuranceMethods.setInsuranceUpdate(
-            "/api/insurance/update",
+            `/api/insurance/update?insuranceId=${requestData.id}`,
             requestData
           );
           return data;
@@ -215,7 +215,7 @@ export const insuranceSlice = createSliceWithThunks({
         const findIndex = state.insurances.findIndex(
           (insurance) => insurance.id === payload
         );
-        
+
         if (findIndex !== -1) {
           state.selectInsurance = state.insurances[findIndex];
         }

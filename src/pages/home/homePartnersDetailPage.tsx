@@ -3,9 +3,10 @@ import { partnerMethods } from "@api/partnerResponse";
 import CarContact from "@components/contractsContent/carContact";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
-import { IInsurance, IInsuranceResponseData } from "@models/common";
+import { IInsurance, IInsuranceResponseData, IPartner } from "@models/common";
 import { insureSelector, partnersSelector } from "@redux/selectors";
 import { insurancedata } from "@utils/insurancedata";
+import { EPermissions } from "@utils/persmission";
 import { ERoutesNames } from "@utils/route";
 import {
   Button,
@@ -25,11 +26,12 @@ const HomePartnersDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setSelectPartner } = useActions();
-  const [listData, setListData] = useState<any | null>(null);
+  const [listData, setListData] = useState<any>();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { setSelectInsurances } = useActions();
-  const {selectInsurance} = useAppSelector(insureSelector)
-
+  const { selectInsurance } = useAppSelector(insureSelector);
+  const { selectPartner } = useAppSelector(partnersSelector);
+  const [permissionList, setPermissionList] = useState<any[]>();
   const dataColumns = useMemo(() => {
     return [
       {
@@ -79,7 +81,7 @@ const HomePartnersDetailPage = () => {
         ),
       },
     ];
-  }, []);
+  }, [selectInsurance, selectPartner, setIsEdit]);
 
   const tabData: TabsProps["items"] = [
     {
@@ -113,9 +115,27 @@ const HomePartnersDetailPage = () => {
             "/api/company/getagent",
             +id
           );
+
           if (status === 200) {
-            // setListData(data);
-            setListData(insurancedata);
+            // setListData(insurancedata)
+            setListData(data);
+            console.log(data);
+            const insurance = data?.insurances?.find(
+              (i: any) => i.id === selectInsurance?.id
+            );
+
+            console.log("insurance", insurance);
+            const agent = insurance?.agents?.find((i: any) => i.id === data.id);
+            console.log("agent", agent);
+
+            if (agent) {
+              const permissions = agent.permissions || [];
+              setPermissionList(permissions);
+              console.log(listData);
+              console.log(permissionList);
+            } else {
+              setPermissionList([]);
+            }
           } else {
             message.error("Ошибка получения данных партнера!");
           }
@@ -128,7 +148,19 @@ const HomePartnersDetailPage = () => {
     fetchData();
   }, [id]);
 
-  if (isEdit ) {
+  const handleSubmit = () => {
+    const {date,status} = partnerMethods.update("/api/company/updateagentpermissions", {
+      agentId: selectPartner?.id,
+      permissions: permissionList,
+    });
+
+      if(status === 200){
+        message.success('Успешное обновление')
+        setIsEdit(false)
+      }
+  };
+
+  if (isEdit) {
     return (
       <div className="flex flex-col space-y-5 px-4 w-[1140px] mx-auto ">
         <div className="flex justify-between">
@@ -144,30 +176,26 @@ const HomePartnersDetailPage = () => {
           </div>
         </div>
         <div className="bg-white flex flex-col space-y-4 p-3 rounded-lg">
-          <h1 className="font-medium text-xl">Дополнительные функции</h1>
+          <h1 className="font-medium text-xl">
+            Редактирование прав партнера {selectPartner?.username}
+          </h1>
           <div className="flex flex-col space-y-3">
             <div className="flex justify-between">
-              <span>Подсказки по тарифам</span>
+              <span>Видеть параметры</span>
+              <Switch />
+            </div>
+
+            <div className="flex justify-between">
+              <span>Редактирование информации страховки</span>
               <Switch />
             </div>
             <div className="flex justify-between">
-              <span>Доступ к определенным справочникам</span>
+              <span>Созздание параматеров страховки</span>
               <Switch />
             </div>
+
             <div className="flex justify-between">
-              <span>Расчеты рисков</span>
-              <Switch />
-            </div>
-            <div className="flex justify-between">
-              <span>Редактирование информации о клиентах</span>
-              <Switch />
-            </div>
-            <div className="flex justify-between">
-              <span>Быстрая подача заявок для повторных клиентов</span>
-              <Switch />
-            </div>
-            <div className="flex justify-between">
-              <span>Сравнение с коллегами по ключевым показателям</span>
+              <span>Удаление страховки </span>
               <Switch />
             </div>
           </div>
@@ -184,14 +212,22 @@ const HomePartnersDetailPage = () => {
   }
   return (
     <div className="w-[1140px] mx-auto  bg-white rounded-lg">
-      <Table dataSource={listData} columns={dataColumns} size="large" />
+      <Table
+        dataSource={listData?.insurances}
+        columns={dataColumns}
+        size="large"
+      />
 
-      {/* {listData?.insurances === undefined && <div>загрузка...</div>}
-      {listData?.insurances.length === 0 && <div >У агента нет продуктов</div>} */}
-      {listData === undefined && <div>загрузка...</div>}
-      {listData?.length === 0 && <div>У агента нет продуктов</div>}
+      {listData?.insurances === undefined && <div>загрузка...</div>}
+      {listData?.insurances.length === 0 && <div>У агента нет продуктов</div>}
+      {/* {listData === undefined && <div>загрузка...</div>} */}
+      {/* {listData?.length === 0 && <div>У агента нет продуктов</div>} */}
+      {listData?.insurances.length ? (
+        <Button onClick={handleSubmit}>Сохранить</Button>
+      ) : null}
     </div>
   );
 };
 
 export default HomePartnersDetailPage;
+//
