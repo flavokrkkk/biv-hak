@@ -5,11 +5,9 @@ import { ICreateInsuranceData } from "@models/common";
 import { authSelector } from "@redux/selectors";
 import { objectInsurance, risks } from "@utils/insurancedata";
 import { Button, DatePicker, Input, Select } from "antd";
-import Modal from "antd/es/modal/Modal";
-import { FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
 
 const HomeConstructorContent = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<Omit<ICreateInsuranceData, "companyId">>({
     name: "",
     description: "",
@@ -21,13 +19,27 @@ const HomeConstructorContent = () => {
     expiresIn: null,
     duration: 0,
   });
-  const toggleModal = () => setIsOpen((prevState) => !prevState);
   const { user } = useAppSelector(authSelector);
   const { createInsurance } = useActions();
 
   const insurance = useMemo(() => objectInsurance, []);
 
   const risksOptions = useMemo(() => risks, []);
+
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  }, []);
+
+  const handleChangeDate = (e: Date) => {
+    setData((prevState) => ({ ...prevState, expiresIn: e }));
+  };
+
+  const handleChangeSelect = (value: string, key: string) => {
+    setData((prevState) => ({ ...prevState, [key]: value }));
+  };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,7 +81,8 @@ const HomeConstructorContent = () => {
                     size="large"
                     placeholder="Название продукта"
                     value={data.name}
-                    onChange={(e) => setData({ ...data, name: e.target.value })}
+                    name="name"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="w-full flex  flex-col space-y-1">
@@ -84,10 +97,9 @@ const HomeConstructorContent = () => {
                     className="w-[27vw]"
                     size="large"
                     placeholder="Описание"
+                    name="description"
                     value={data.description}
-                    onChange={(e) =>
-                      setData({ ...data, description: e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-1 ">
@@ -101,6 +113,9 @@ const HomeConstructorContent = () => {
                     className="w-[27vw]"
                     size="large"
                     placeholder="Объект страхования"
+                    onChange={(value) =>
+                      handleChangeSelect(value, "objectInsurance")
+                    }
                     value={data.objectInsurance}
                     options={insurance}
                   />
@@ -118,6 +133,9 @@ const HomeConstructorContent = () => {
                     placeholder="Риск страхования"
                     options={risksOptions}
                     value={data.riskInsurance}
+                    onChange={(value) =>
+                      handleChangeSelect(value, "riskInsurance")
+                    }
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-1">
@@ -131,11 +149,10 @@ const HomeConstructorContent = () => {
                     required
                     className="w-[27vw]"
                     size="large"
+                    name="conditionsInsurance"
                     placeholder="Условия покрытия"
                     value={data.conditionsInsurance}
-                    onChange={(e) =>
-                      setData({ ...data, conditionsInsurance: e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -155,10 +172,9 @@ const HomeConstructorContent = () => {
                     size="large"
                     placeholder="Максимальная страховая сумма"
                     type="number"
+                    name="maxAmount"
                     defaultValue={data.maxAmount}
-                    onChange={(e) =>
-                      setData({ ...data, maxAmount: parseInt(e.target.value) })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-1">
@@ -174,10 +190,9 @@ const HomeConstructorContent = () => {
                     size="large"
                     placeholder="Стоимость страхования"
                     type="number"
+                    name="amount"
                     value={data.amount}
-                    onChange={(e) =>
-                      setData({ ...data, amount: +e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -194,10 +209,9 @@ const HomeConstructorContent = () => {
                     size="large"
                     placeholder="Длительность страхования (в днях)"
                     type="number"
+                    name="duration"
                     defaultValue={data.duration}
-                    onChange={(e) =>
-                      setData({ ...data, duration: +e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="flex flex-col space-y-1 w-[27vw]">
@@ -205,10 +219,9 @@ const HomeConstructorContent = () => {
                   <DatePicker
                     value={data.expiresIn}
                     size="large"
+                    name="expiresIn"
                     placeholder=""
-                    onChange={(e) => {
-                      setData({ ...data, expiresIn: e });
-                    }}
+                    onChange={handleChangeDate}
                   />
                 </div>
               </div>
@@ -226,37 +239,7 @@ const HomeConstructorContent = () => {
             </Button>
           </div>
         </form>
-        <div></div>
       </div>
-      <Modal open={isOpen} onCancel={toggleModal} footer={null}>
-        <section className="flex flex-col space-y-4">
-          <h1 className="font-medium text-xl">Добавление параметра</h1>
-
-          <section className="flex space-x-2">
-            <div className="flex flex-col space-y-4 w-full">
-              <Input size="large" placeholder="Название" />
-              <Select size="large" placeholder="" />
-              <Select size="large" />
-            </div>
-            <div className="flex flex-col space-y-4 w-full">
-              <Select size="large" placeholder="Выбрать вид" />
-            </div>
-          </section>
-          <div>
-            <Button variant="outlined" color="primary" icon={<PlusOutlined />}>
-              Добавить
-            </Button>
-          </div>
-        </section>
-        <div className="mt-16 flex space-x-2">
-          <Button variant="solid" color="primary">
-            Сохраниь
-          </Button>
-          <Button variant="solid" color="primary">
-            Отмена
-          </Button>
-        </div>
-      </Modal>
     </>
   );
 };

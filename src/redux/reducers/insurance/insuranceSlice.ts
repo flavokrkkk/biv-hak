@@ -18,6 +18,7 @@ const createSliceWithThunks = buildCreateSlice({
 
 export interface InsuranceState {
   insurances: IInsuranceResponseData[];
+  selectInsurance: IInsuranceResponseData | null;
   insurancesFilter: IInsuranceResponseData[];
   insurance: ICreateInsuranceData | null;
   filterParam: Array<IFilterParam>;
@@ -27,6 +28,7 @@ export interface InsuranceState {
 
 const initialState: InsuranceState = {
   insurance: null,
+  selectInsurance: null,
   insurancesFilter: [],
   insurances: [],
   isLoading: false,
@@ -109,6 +111,46 @@ export const insuranceSlice = createSliceWithThunks({
         },
       }
     ),
+    getInsurancesById: create.asyncThunk(
+      async (insuranceId: number, { rejectWithValue }) => {
+        try {
+          const { data } = await insuranceMethods.getInsuranceById(
+            "/api/insurance/get",
+            insuranceId
+          );
+          return data;
+        } catch (e) {
+          return rejectWithValue(`${e}`);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.selectInsurance = payload;
+          state.isLoading = false;
+        },
+        rejected: (state, { payload }) => {
+          state.error = "Invalid reques";
+          state.isLoading = false;
+        },
+      }
+    ),
+    setAsignAgent: create.asyncThunk(
+      async (requestData: IInsuranceResponseData, { rejectWithValue }) => {
+        try {
+          const { data } = await insuranceMethods.setAsignAgent(
+            "/api/insurance/update",
+            requestData
+          );
+          return data;
+        } catch (e) {
+          return rejectWithValue(`${e}`);
+        }
+      }
+    ),
+
     setSearchInsurances: create.reducer(
       (state, { payload }: PayloadAction<string>) => {
         state.insurancesFilter = state.insurances.filter(
