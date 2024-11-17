@@ -2,6 +2,7 @@ import { partnerMethods } from "@api/partnerResponse";
 import CarContact from "@components/contractsContent/carContact";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
+import { IInsurance } from "@models/common";
 import { partnersSelector } from "@redux/selectors";
 import { ERoutesNames } from "@utils/route";
 import { Button, Checkbox, message, Switch, Tabs, TabsProps } from "antd";
@@ -59,7 +60,7 @@ const HomePartnersDetailPage = () => {
       }
     };
 
-      fetchData();
+    fetchData();
   }, [id]);
 
   if (isEdit) {
@@ -114,8 +115,16 @@ const HomePartnersDetailPage = () => {
       </div>
     </div>;
   }
-
-  return <div className="w-[1140px] mx-auto">{listData}</div>;
+console.log(listData)
+  return (
+    <div className="w-[1140px] mx-auto">
+      {listData?.insurances?.map((i: IInsurance) => (
+        <div key={i.id}>{i.name}</div>
+      ))}
+      {listData?.insurances === undefined && <div>загрузка...</div>}
+      {listData?.insurances.length === 0 && <div >У агента нет продуктов</div>}
+    </div>
+  );
 };
 
 export default HomePartnersDetailPage;

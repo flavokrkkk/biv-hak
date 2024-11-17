@@ -27,8 +27,8 @@ export const HomeContractsContent = () => {
     return [
       {
         title: "№ договора",
-        dataIndex: "number",
-        key: "number",
+        dataIndex: "id",
+        key: "id",
       },
       {
         title: "ФИО",

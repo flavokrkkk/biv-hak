@@ -250,7 +250,7 @@ const HomeConstructorContent = () => {
         </section>
         <div className="mt-16 flex space-x-2">
           <Button variant="solid" color="primary">
-            Сохраниь
+            Сохранить
           </Button>
           <Button variant="solid" color="primary">
             Отмена
