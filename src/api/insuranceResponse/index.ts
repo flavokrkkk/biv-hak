@@ -22,4 +22,11 @@ export const insuranceMethods = {
     companyId: number
   ): Promise<AxiosResponse<Array<IInsuranceResponseData>>> =>
     axiosWithAuth.get(url, { params: { companyId: companyId } }),
+  getInsuranceById: (
+    urL: string,
+    insuranceId: number
+  ): Promise<AxiosResponse<IInsuranceResponseData>> =>
+    axiosWithAuth.get(urL, { params: { insuranceId: insuranceId } }),
+  setAsignAgent: (url: string, body: IInsuranceResponseData) =>
+    axiosWithAuth.put(url, body),
 };
