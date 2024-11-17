@@ -12,6 +12,10 @@ export const partnerMethods = {
     url: string,
     body: { agentName: string }
   ): Promise<AxiosResponse<any>> => axiosWithAuth.post(url, body),
+  
   getAgent: (url: string, agentId: number): Promise<AxiosResponse<IPartner>> =>
     axiosWithAuth.get(`${url}?agentId=${agentId}`),
+
+  getAllAgents: (url: string): Promise<AxiosResponse<Array<IPartner>>> =>
+    axiosWithAuth.get(url),
 };

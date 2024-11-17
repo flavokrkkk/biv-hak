@@ -1,20 +1,24 @@
 import { insuranceMethods } from "@api/insuranceResponse";
-import { ICreateInsuranceData, IFilterParam, IInsurance } from "@models/common";
+import {
+  ICreateInsuranceData,
+  IFilterParam,
+  IInsurance,
+  IInsuranceResponseData,
+} from "@models/common";
 import {
   asyncThunkCreator,
   buildCreateSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { message } from "antd";
-import { insurancedata } from "../../../utils/insurancedata";
 
 const createSliceWithThunks = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 });
 
 export interface InsuranceState {
-  insurances: IInsurance[];
-  insurancesFilter: IInsurance[];
+  insurances: IInsuranceResponseData[];
+  insurancesFilter: IInsuranceResponseData[];
   insurance: ICreateInsuranceData | null;
   filterParam: Array<IFilterParam>;
   isLoading: boolean;
@@ -23,8 +27,8 @@ export interface InsuranceState {
 
 const initialState: InsuranceState = {
   insurance: null,
-  insurancesFilter: insurancedata,
-  insurances: insurancedata,
+  insurancesFilter: [],
+  insurances: [],
   isLoading: false,
   filterParam: [],
   error: "",
@@ -37,6 +41,34 @@ export const insuranceSlice = createSliceWithThunks({
     setInsurance: create.reducer(
       (state, { payload }: PayloadAction<ICreateInsuranceData>) => {
         state.insurance = payload;
+      }
+    ),
+
+    getInsurance: create.asyncThunk(
+      async (companyId: number, { rejectWithValue }) => {
+        try {
+          const { data } = await insuranceMethods.getAllInsurance(
+            "/api/insurance/getall",
+            companyId
+          );
+          return data;
+        } catch (err) {
+          return rejectWithValue(`${err}`);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.isLoading = false;
+          state.insurances = payload;
+          state.insurancesFilter = payload;
+        },
+        rejected: (state) => {
+          state.isLoading = false;
+          state.error = "Invalid request!";
+        },
       }
     ),
 

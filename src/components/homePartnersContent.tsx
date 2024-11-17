@@ -99,7 +99,8 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
           >
             <div>
               <div className="flex justify-between">
-                <h1 className="font-medium text-xl">{partner.name}</h1>
+
+                <h1 className="font-medium text-xl">{partner.username}</h1>
                 <Button icon={<EditOutlined />}>
                   <Link to={`${ERoutesNames.HOME_PARTNERS}/${partner.id}`}>
                     Редактировать
@@ -108,12 +109,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
               </div>
               <section className="flex flex-col space-y-6">
                 <div className="flex flex-col">
-                  <span>{partner.city}</span>
                   <span>ID:{partner.id}</span>
-                </div>
-                <div className="flex space-x-56">
-                  <span>{partner.standing}</span>
-                  <Button>{partner.statusDeal}</Button>
                 </div>
               </section>
             </div>

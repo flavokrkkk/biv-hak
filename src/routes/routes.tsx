@@ -1,4 +1,3 @@
-import { HomeContractsPage } from "@components/homeContractsPage";
 import { HomeConstructorPage } from "@pages/home/homeConstructorPage";
 import HomePartnersDetailPage from "@pages/home/homePartnersDetailPage";
 import HomePartnersPage from "@pages/home/homePartnersPage";
@@ -37,7 +36,7 @@ export const routes = createBrowserRouter([
             children: [
               {
                 path: "",
-                element: <HomeContractsPage />,
+                element: <HomeСontractsPage />,
               },
               {
                 path: `${ERoutesNames.HOME_REESTR}/:id`,
@@ -79,7 +78,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: ERoutesNames.UNDERWRITING,
-        element: <Underwriting/>,
+        element: <Underwriting />,
       },
       {
         path: ERoutesNames.CUMULATION,
