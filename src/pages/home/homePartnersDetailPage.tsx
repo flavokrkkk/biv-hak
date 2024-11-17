@@ -19,11 +19,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const HomePartnersDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { setSelectPartner } = useActions();
-  const [listData, setListData] = useState<any>();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const { setSelectInsurances } = useActions();
+  const { setSelectInsurances, getAgentById } = useActions();
   const { selectInsurance } = useAppSelector(insureSelector);
 
   const { selectPartner } = useAppSelector(partnersSelector);
@@ -81,71 +78,16 @@ const HomePartnersDetailPage = () => {
   }, [selectInsurance, selectPartner, setIsEdit]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
-        try {
-          setSelectPartner(Number(id));
-          const { data, status } = await partnerMethods.getAgent(
-            "/api/company/getagent",
-            +id
-          );
-
-          if (status === 200) {
-            // setListData(insurancedata)
-            setListData(data);
-            console.log(data);
-            const insurance = data?.insurances?.find(
-              (i: any) => i.id === selectInsurance?.id
-            );
-
-            console.log("insurance", insurance);
-            const agent = insurance?.agents?.find((i: any) => i.id === data.id);
-            console.log("agent", agent);
-
-            if (agent) {
-              const permissions = agent.permissions || [];
-              setPermissionList(permissions);
-              console.log(listData);
-              console.log(permissionList);
-            } else {
-              setPermissionList([]);
-            }
-          } else {
-            message.error("Ошибка получения данных партнера!");
-          }
-        } catch (error) {
-          message.error("Произошла ошибка при запросе!");
-        }
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  const handleSubmit = () => {
-    const { date, status } = partnerMethods.update(
-      "/api/company/updateagentpermissions",
-      {
-        agentId: selectPartner?.id,
-        permissions: permissionList,
-      }
-    );
-
-    if (status === 200) {
-      message.success("Успешное обновление");
-      setIsEdit(false);
+    if (id) {
+      getAgentById(Number(id));
     }
-  };
+  }, [id]);
 
   if (isEdit) {
     return (
       <div className="flex flex-col space-y-5 px-4 w-[1140px] mx-auto ">
         <div className="flex justify-between">
           <div className="flex flex-col space-y-1">
-            {/* <h1 className="font-medium text-xl">{selectPartner?.username}</h1>
-          <div className="flex space-x-8">
-            <span>ID:{selectPartner?.id}</span>
-          </div> */}
             <h1 className="font-medium text-xl">{selectInsurance?.name}</h1>
             <div className="flex space-x-8">
               <span>№ договора:{selectInsurance?.id}</span>
@@ -177,31 +119,20 @@ const HomePartnersDetailPage = () => {
             </div>
           </div>
         </div>
-        {/* <div className="bg-white flex flex-col space-y-4 p-3 rounded-lg">
-        <Tabs
-          defaultActiveKey="1"
-          items={tabData}
-          onChange={() => console.log("")}
-        />
-      </div> */}
       </div>
     );
   }
   return (
-    <div className="w-[1140px] mx-auto  bg-white rounded-lg">
+    <div className="w-[1140px] mx-auto  bg-white rounded-lg py-3">
       <Table
-        dataSource={listData?.insurances}
+        dataSource={selectPartner?.insurances}
         columns={dataColumns}
         size="large"
       />
 
-      {listData?.insurances === undefined && <div>загрузка...</div>}
-      {listData?.insurances.length === 0 && <div>У агента нет продуктов</div>}
-      {/* {listData === undefined && <div>загрузка...</div>} */}
-      {/* {listData?.length === 0 && <div>У агента нет продуктов</div>} */}
-      {listData?.insurances.length ? (
-        <Button onClick={handleSubmit}>Сохранить</Button>
-      ) : null}
+      <div className="flex justify-center w-full">
+        {selectPartner?.insurances.length ? <Button>Сохранить</Button> : null}
+      </div>
     </div>
   );
 };

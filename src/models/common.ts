@@ -61,6 +61,26 @@ export interface IInsuranceResponseData {
   ];
 }
 
+export interface IInsuranceRequestData {
+  id: number;
+  companyId: number;
+  name: string;
+  description: string;
+  objectInsurance: string;
+  riskInsurance: string;
+  conditionsInsurance: string;
+  maxAmount: number;
+  amount: number;
+  expiresIn: string;
+  duration: number;
+  agents: [
+    {
+      agentId: number;
+      permissions: Array<string>;
+    }
+  ];
+}
+
 export interface IInsurance {
   id: number;
   name: string;

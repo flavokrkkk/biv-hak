@@ -2,8 +2,23 @@ import { ToolOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { useActions } from "@hooks/useActions";
 import { IInsuranceResponseData, IPartner } from "@models/common";
 import { ERoutesNames } from "@utils/route";
-import { Button, DatePicker, Input, message, Select } from "antd";
-import { ChangeEvent, FC, FormEvent, useCallback, useState } from "react";
+import {
+  Button,
+  DatePicker,
+  Input,
+  message,
+  Select,
+  Tabs,
+  TabsProps,
+} from "antd";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import AgentList from "./agentList";
 import { rootCheck } from "@helpers/rootCheck";
@@ -48,32 +63,82 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
 
   const handleAddAsignAgent = (param: IPartner) => {
     setInsuranceUpdate({
-      ...selectInsurance,
-      agents: [
-        {
-          agentId: param.id,
-          permissions: [],
-        },
-      ],
+      body: {
+        ...selectInsurance,
+        riskInsurance: editValue.riskInsurance,
+        objectInsurance: editValue.objectInsurance,
+        agents: [
+          {
+            agentId: editValue.id,
+            permissions: [],
+          },
+        ],
+      },
+      query: selectInsurance.id,
     });
     message.success("Усешное добавление партнера в сделку!");
   };
-
+  ///  insuranceId: selectInsurance.id,
+  ///companyId: selectInsurance.companyId,
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setInsuranceUpdate({
-      ...selectInsurance,
-      riskInsurance: editValue.riskInsurance,
-      objectInsurance: editValue.objectInsurance,
-      agents: [
-        {
-          agentId: editValue.id,
-          permissions: [],
-        },
-      ],
-    });
+    // setInsuranceUpdate({
+    //   ...selectInsurance,
+    //   riskInsurance: editValue.riskInsurance,
+    //   objectInsurance: editValue.objectInsurance,
+    //   agents: [
+    //     {
+    //       agentId: editValue.id,
+    //       permissions: [],
+    //     },
+    //   ],
+    // });
     message.success("Усешное изменение договора!");
   };
+
+  const filterAgentList = useMemo(
+    () =>
+      filterPartners.filter((el) =>
+        selectInsurance.agents.find((agent) => el.id === agent.id)
+      ),
+
+    [filterPartners, selectInsurance]
+  );
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Состоят в сделке",
+      children: (
+        <div className="flex flex-col space-y-2">
+          {filterAgentList.map((partner) => (
+            <AgentList
+              key={partner.id}
+              partner={partner}
+              setAgent={handleAddAsignAgent}
+              type="in"
+            />
+          ))}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: "Не состоят в сделке",
+      children: (
+        <div className="flex flex-col space-y-2">
+          {filterPartners.map((partner) => (
+            <AgentList
+              key={partner.id}
+              partner={partner}
+              setAgent={handleAddAsignAgent}
+              type="out"
+            />
+          ))}
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className="flex flex-col space-y-3  w-[1140px] mx-auto">
@@ -168,13 +233,7 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
         )}
       </form>
       <div className="flex flex-col space-y-2 ">
-        {filterPartners.map((partner) => (
-          <AgentList
-            key={partner.id}
-            partner={partner}
-            setAgent={handleAddAsignAgent}
-          />
-        ))}
+        <Tabs defaultActiveKey="1" items={items} />
       </div>
     </div>
   );

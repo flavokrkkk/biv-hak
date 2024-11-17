@@ -6,9 +6,10 @@ import { FC } from "react";
 interface IAgentList {
   partner: IPartner;
   setAgent: (partner: IPartner) => void;
+  type: "in" | "out";
 }
 
-const AgentList: FC<IAgentList> = ({ partner, setAgent }) => {
+const AgentList: FC<IAgentList> = ({ partner, setAgent, type }) => {
   const handleAddAsignAgent = () => {
     setAgent(partner);
   };
@@ -25,10 +26,9 @@ const AgentList: FC<IAgentList> = ({ partner, setAgent }) => {
         </div>
 
         <div className="flex justify-center items-center">
-          <Button
-            icon={<PlusOutlined />}
-            onClick={handleAddAsignAgent}
-          ></Button>
+          {type === "out" && (
+            <Button icon={<PlusOutlined />} onClick={handleAddAsignAgent} />
+          )}
         </div>
       </div>
     </div>

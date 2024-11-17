@@ -14,11 +14,8 @@ export const partnerMethods = {
   ): Promise<AxiosResponse<any>> => axiosWithAuth.post(url, body),
 
   getAgent: (url: string, agentId: number): Promise<AxiosResponse<IPartner>> =>
-    axiosWithAuth.get(`${url}?agentId=${agentId}`),
+    axiosWithAuth.get(url, { params: { agentId: agentId } }),
 
   getAllAgents: (url: string): Promise<AxiosResponse<Array<IPartner>>> =>
     axiosWithAuth.get(url),
-
-  update: (url: string, data: any): Promise<AxiosResponse<Array<any>>> =>
-    axiosWithAuth.put(url, data),
 };

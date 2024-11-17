@@ -2,6 +2,7 @@ import { axiosForAuth, axiosWithAuth } from "@api/interceptors";
 import {
   IAuthRequestData,
   ICreateInsuranceData,
+  IInsuranceRequestData,
   IInsuranceResponseData,
   IRegisterRequestData,
 } from "@models/common";
@@ -27,7 +28,7 @@ export const insuranceMethods = {
     insuranceId: number
   ): Promise<AxiosResponse<IInsuranceResponseData>> =>
     axiosWithAuth.get(urL, { params: { insuranceId: insuranceId } }),
-  setInsuranceUpdate: (url: string, body: IInsuranceResponseData) =>
+  setInsuranceUpdate: (url: string, body: IInsuranceRequestData) =>
     axiosWithAuth.put(url, body),
   deleteInsurance: (url: string, insuranceId: number) =>
     axiosWithAuth.delete(url, { params: { insuranceId: insuranceId } }),

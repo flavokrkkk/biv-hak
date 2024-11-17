@@ -74,6 +74,32 @@ export const partnersSlice = createSliceWithThunks({
         },
       }
     ),
+    getAgentById: create.asyncThunk(
+      async (agentId: number, { rejectWithValue }) => {
+        try {
+          const { data } = await partnerMethods.getAgent(
+            "/api/company/getagent",
+            agentId
+          );
+          return data;
+        } catch (e) {
+          return rejectWithValue(`${e}`);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.selectPartner = payload;
+          state.isLoading = false;
+        },
+        rejected: (state) => {
+          state.error = "Failed To Request!";
+          state.isLoading = false;
+        },
+      }
+    ),
   }),
 });
 

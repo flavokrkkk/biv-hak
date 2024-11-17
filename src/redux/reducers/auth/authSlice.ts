@@ -5,6 +5,8 @@ import {
   buildCreateSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
+import { EAuthTypes } from "@utils/common";
+import cookies from "js-cookie";
 
 const createSliceWithThunks = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
@@ -34,7 +36,13 @@ export const authSlice = createSliceWithThunks({
     getRefreshInfo: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         try {
-          const { data } = await authMethods.refreshInfo("/api/company/self");
+          const subdomain: Record<EAuthTypes, string> = {
+            [EAuthTypes.AGENT]: "/api/agent/self",
+            [EAuthTypes.COMPANY]: "/api/company/self",
+          };
+          const type = (cookies.get("type") || "") as EAuthTypes;
+
+          const { data } = await authMethods.refreshInfo(subdomain[type]);
           return data;
         } catch (err) {
           return rejectWithValue(`${err}`);

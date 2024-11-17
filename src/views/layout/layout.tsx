@@ -1,4 +1,5 @@
 import { AsideContent } from "@components/asideContent";
+import { rootCheck } from "@helpers/rootCheck";
 import { deleteTokens } from "@helpers/tokenHelper";
 import { useActions } from "@hooks/useActions";
 import { routesData } from "@utils/route";
@@ -19,13 +20,17 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const isCheck = rootCheck();
+
   const handleLogout = () => {
     deleteTokens();
     navigate(0);
   };
 
   useEffect(() => {
-    getAllPartners();
+    if (isCheck) {
+      getAllPartners();
+    }
     getRefreshInfo();
   }, []);
 

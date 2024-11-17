@@ -30,7 +30,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data, status } = await partnerMethods.linkToCompany(
+      const { status } = await partnerMethods.linkToCompany(
         "/api/company/assignagent",
         { agentName: partnerLogin }
       );

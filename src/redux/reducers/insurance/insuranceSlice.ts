@@ -3,7 +3,9 @@ import {
   ICreateInsuranceData,
   IFilterParam,
   IInsurance,
+  IInsuranceRequestData,
   IInsuranceResponseData,
+  IRegisterRequestData,
 } from "@models/common";
 import {
   asyncThunkCreator,
@@ -138,11 +140,14 @@ export const insuranceSlice = createSliceWithThunks({
       }
     ),
     setInsuranceUpdate: create.asyncThunk(
-      async (requestData: IInsuranceResponseData, { rejectWithValue }) => {
+      async (
+        requestData: { body: IInsuranceRequestData; query: number },
+        { rejectWithValue }
+      ) => {
         try {
           const { data } = await insuranceMethods.setInsuranceUpdate(
-            `/api/insurance/update?insuranceId=${requestData.id}`,
-            requestData
+            `/api/insurance/update?insuranceId=${requestData.query}`,
+            requestData.body
           );
           return data;
         } catch (e) {
