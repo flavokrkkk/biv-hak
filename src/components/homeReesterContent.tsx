@@ -109,7 +109,6 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
     setIsEdit(false);
     message.success("Усешное изменение договора!");
   };
-
   const filterAgentList = useMemo(
     () =>
       filterPartners.filter((el) =>
