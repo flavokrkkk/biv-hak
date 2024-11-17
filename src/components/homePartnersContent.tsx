@@ -21,6 +21,7 @@ interface IHomePartnersContent {
 const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [partnerLogin, setPartnerLogin] = useState<string>("");
+  
   const toggle = useCallback(() => {
     setIsOpen(!isOpen);
   }, [isOpen]);
@@ -88,7 +89,6 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
         <div className="flex space-x-40">
           <span>Информация о работнике</span>
 
-          <span>Статус</span>
         </div>
         <PlusOutlined className="ml-auto cursor-pointer" onClick={toggle} />
       </div>

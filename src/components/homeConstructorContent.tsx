@@ -398,6 +398,7 @@ const HomeConstructorContent = () => {
           </div>
         </form> */}
       </div>
+
       <Modal open={isOpen} onCancel={toggleModal} footer={null}>
         <section className="flex flex-col space-y-4">
           <h1 className="font-medium text-xl">Добавление параметра</h1>
