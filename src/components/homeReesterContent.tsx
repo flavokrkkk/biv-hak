@@ -22,6 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AgentList from "./agentList";
 import { rootCheck } from "@helpers/rootCheck";
+import dayjs, { Dayjs } from "dayjs";
 
 interface IHomeReesterContent {
   filterPartners: IPartner[];
@@ -37,7 +38,17 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
     expiresIn: "",
     riskInsurance: selectInsurance.riskInsurance,
     objectInsurance: selectInsurance.objectInsurance,
+    description: selectInsurance.description,
+    name: selectInsurance.name,
+    maxAmount: selectInsurance.maxAmount,
   });
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs("2024-01-01", "YYYY-MM-DD")
+  );
+
+  const handleChange = (date: Dayjs) => {
+    setSelectedDate(date);
+  };
   const { deleteInsurance } = useActions();
   const [isEdit, setIsEdit] = useState(false);
   const navigate = useNavigate();
@@ -78,21 +89,24 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
     });
     message.success("Усешное добавление партнера в сделку!");
   };
-  ///  insuranceId: selectInsurance.id,
-  ///companyId: selectInsurance.companyId,
+
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // setInsuranceUpdate({
-    //   ...selectInsurance,
-    //   riskInsurance: editValue.riskInsurance,
-    //   objectInsurance: editValue.objectInsurance,
-    //   agents: [
-    //     {
-    //       agentId: editValue.id,
-    //       permissions: [],
-    //     },
-    //   ],
-    // });
+    setInsuranceUpdate({
+      body: {
+        ...selectInsurance,
+        ...editValue,
+        expiresIn: selectedDate.toISOString(),
+        agents: [
+          {
+            agentId: editValue.id,
+            permissions: [],
+          },
+        ],
+      },
+      query: selectInsurance.id,
+    });
+    setIsEdit(false);
     message.success("Усешное изменение договора!");
   };
 
@@ -182,8 +196,40 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
                 />
               </div>
               <div className="flex flex-col space-y-1">
+                <label>Описание договора</label>
+                <Input
+                  required
+                  size="large"
+                  value={editValue.description}
+                  name="description"
+                  disabled={!isEdit}
+                  onChange={handleChangeValue}
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
                 <label>Дата окончания действия договора</label>
-                <DatePicker size="large" disabled={!isEdit} required />
+                <DatePicker
+                  size="large"
+                  disabled={!isEdit}
+                  required
+                  defaultValue={selectedDate}
+                  onChange={handleChange}
+                  format="YYYY-MM-DD"
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <label>Максимальная страховая сумма</label>
+                <Input
+                  required
+                  className="w-[27vw]"
+                  size="large"
+                  placeholder="Максимальная страховая сумма"
+                  type="number"
+                  name="maxAmount"
+                  disabled={!isEdit}
+                  defaultValue={editValue.maxAmount}
+                  onChange={handleChangeValue}
+                />
               </div>
             </div>
           </div>
@@ -208,6 +254,17 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
                   size="large"
                   name="objectInsurance"
                   value={editValue.objectInsurance}
+                  disabled={!isEdit}
+                  onChange={handleChangeValue}
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <label>ФИО</label>
+                <Input
+                  required
+                  size="large"
+                  name="name"
+                  value={editValue.name}
                   disabled={!isEdit}
                   onChange={handleChangeValue}
                 />

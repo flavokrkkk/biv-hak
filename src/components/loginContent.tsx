@@ -53,7 +53,7 @@ const LoginContent = () => {
         onSubmit={onFormSubmit}
       >
         <div className="flex justify-center">
-          <LogoIcon />
+          <img src="/frame2.png" height={100} width={100} />
         </div>
         <h1 className="text-3xl font-semibold text-center">Войти как</h1>
         <div className="flex justify-center space-x-2 items-center">
