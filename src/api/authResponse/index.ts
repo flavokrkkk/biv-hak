@@ -1,4 +1,4 @@
-import { axiosForAuth } from "@api/interceptors";
+import { axiosForAuth, axiosWithAuth } from "@api/interceptors";
 import {
   IAuthRequestData,
   IAuthResponseData,
@@ -17,4 +17,6 @@ export const authMethods = {
   ): Promise<AxiosResponse<IAuthResponseData>> => axiosForAuth.post(url, body),
   refreshToken: (url: string, body: { refreshToken: string }) =>
     axiosForAuth.post(url),
+  refreshInfo: (url: string): Promise<AxiosResponse<IAuthResponseData>> =>
+    axiosWithAuth.get(url),
 };

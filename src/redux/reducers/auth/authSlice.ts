@@ -1,3 +1,4 @@
+import { authMethods } from "@api/authResponse";
 import { IAuthResponseData } from "@models/common";
 import {
   asyncThunkCreator,
@@ -11,10 +12,14 @@ const createSliceWithThunks = buildCreateSlice({
 
 export interface AuthState {
   user: IAuthResponseData | null;
+  isLoading: boolean;
+  error: string;
 }
 
 const initialState: AuthState = {
   user: null,
+  error: "",
+  isLoading: false,
 };
 
 export const authSlice = createSliceWithThunks({
@@ -24,6 +29,24 @@ export const authSlice = createSliceWithThunks({
     saveData: create.reducer(
       (state, { payload }: PayloadAction<IAuthResponseData>) => {
         state.user = payload;
+      }
+    ),
+    getRefreshInfo: create.asyncThunk(
+      async (_, { rejectWithValue }) => {
+        try {
+          const { data } = await authMethods.refreshInfo("/api/company/self");
+          return data;
+        } catch (err) {
+          return rejectWithValue(`${err}`);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.user = payload;
+        },
       }
     ),
   }),

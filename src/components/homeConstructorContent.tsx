@@ -1,24 +1,20 @@
-import {
-  PlusOutlined,
-  ToolOutlined,
-  UnorderedListOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
 import { ICreateInsuranceData } from "@models/common";
 import { authSelector } from "@redux/selectors";
+import { objectInsurance, risks } from "@utils/insurancedata";
 import { Button, DatePicker, Input, Select } from "antd";
 import Modal from "antd/es/modal/Modal";
-import { FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FormEvent, useMemo, useState } from "react";
 
 const HomeConstructorContent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<Omit<ICreateInsuranceData, "companyId">>({
     name: "",
     description: "",
-    objectInsurance: "",
-    riskInsurance: "",
+    objectInsurance: "Объект страхования",
+    riskInsurance: "Риск страхования",
     conditionsInsurance: "",
     maxAmount: 0,
     amount: 0,
@@ -28,6 +24,10 @@ const HomeConstructorContent = () => {
   const toggleModal = () => setIsOpen((prevState) => !prevState);
   const { user } = useAppSelector(authSelector);
   const { createInsurance } = useActions();
+
+  const insurance = useMemo(() => objectInsurance, []);
+
+  const risksOptions = useMemo(() => risks, []);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,6 +102,7 @@ const HomeConstructorContent = () => {
                     size="large"
                     placeholder="Объект страхования"
                     value={data.objectInsurance}
+                    options={insurance}
                   />
                 </div>
                 <div className="w-full flex flex-col space-y-1">
@@ -115,6 +116,7 @@ const HomeConstructorContent = () => {
                     className="w-[27vw]"
                     size="large"
                     placeholder="Риск страхования"
+                    options={risksOptions}
                     value={data.riskInsurance}
                   />
                 </div>
@@ -206,7 +208,6 @@ const HomeConstructorContent = () => {
                     placeholder=""
                     onChange={(e) => {
                       setData({ ...data, expiresIn: e });
-                      console.log(e);
                     }}
                   />
                 </div>

@@ -1,7 +1,7 @@
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
-import { IInsurance } from "@models/common";
+import { IInsurance, IInsuranceResponseData } from "@models/common";
 import { insureSelector } from "@redux/selectors";
 import { ERoutesNames } from "@utils/route";
 import HomeInfoLayout from "@views/layout/homeInfoLayout";
@@ -9,9 +9,7 @@ import { Button, Space, Table } from "antd";
 import { ChangeEvent, FC, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-interface IHomeContractsPage {}
-
-export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
+export const HomeContractsContent = () => {
   const [searchValue, setSearchValue] = useState("");
   const { insurancesFilter } = useAppSelector(insureSelector);
   const { setSearchInsurances } = useActions();
@@ -60,7 +58,7 @@ export const HomeContractsPage: FC<IHomeContractsPage> = ({}) => {
       {
         title: "Действия",
         key: "action",
-        render: (_: any, record: IInsurance) => (
+        render: (_: any, record: IInsuranceResponseData) => (
           <Space size="middle" className="flex justify-center">
             <Button
               icon={

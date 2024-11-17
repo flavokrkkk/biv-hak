@@ -39,6 +39,28 @@ export interface ICreateInsuranceData {
   companyId: number;
 }
 
+export interface IInsuranceResponseData {
+  id: number;
+  companyId: number;
+  name: string;
+  description: string;
+  objectInsurance: string;
+  riskInsurance: string;
+  conditionsInsurance: string;
+  maxAmount: number;
+  amount: number;
+  expiresIn: string;
+  duration: number;
+  agents: [
+    {
+      id: number;
+      username: string;
+      email: string;
+      permissions: Array<string>;
+    }
+  ];
+}
+
 export interface IInsurance {
   id: number;
   name: string;
@@ -51,10 +73,31 @@ export interface IInsurance {
 
 export interface IPartner {
   id: number;
-  name: string;
-  city: string;
-  standing: string;
-  statusDeal: string;
+  username: string;
+  email: string;
+  insurances: [
+    {
+      id: number;
+      companyId: number;
+      name: string;
+      description: string;
+      objectInsurance: string;
+      riskInsurance: string;
+      conditionsInsurance: string;
+      maxAmount: number;
+      amount: number;
+      expiresIn: string;
+      duration: number;
+      agents: [
+        {
+          id: number;
+          username: string;
+          email: string;
+          permissions: ["CREATE_INSURANCE"];
+        }
+      ];
+    }
+  ];
 }
 
 export interface IFilterParam {

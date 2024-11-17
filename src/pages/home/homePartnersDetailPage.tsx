@@ -13,7 +13,6 @@ const HomePartnersDetailPage = () => {
   const { setSelectPartner } = useActions();
   const { selectPartner } = useAppSelector(partnersSelector);
 
-  
   const tabData: TabsProps["items"] = [
     {
       key: "1",
@@ -43,17 +42,13 @@ const HomePartnersDetailPage = () => {
     }
   }, [id, selectPartner]);
 
-
-
   return (
     <div className="flex flex-col space-y-5 px-4 w-[1140px] mx-auto ">
       <div className="flex justify-between">
         <div className="flex flex-col space-y-1">
-          <h1 className="font-medium text-xl">{selectPartner?.name}</h1>
+          <h1 className="font-medium text-xl">{selectPartner?.username}</h1>
           <div className="flex space-x-8">
             <span>ID:{selectPartner?.id}</span>
-            <span>{selectPartner?.city}</span>
-            <span>{selectPartner?.statusDeal}</span>
           </div>
         </div>
         <div className="flex space-x-2">

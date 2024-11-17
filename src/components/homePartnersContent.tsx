@@ -24,7 +24,6 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
     setIsOpen(!isOpen);
   }, []);
 
-
   const handleChangePartnerId = (newPartnerLogin: string) => {
     setPartnerLogin(newPartnerLogin);
   };
@@ -44,8 +43,6 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
       message.error(error.message);
     }
   };
-
-  
 
   return (
     <div className="px-4 w-[1140px] mx-auto">
@@ -101,8 +98,8 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
           >
             <div>
               <div className="flex justify-between">
-                <h1 className="font-medium text-xl">{partner.name}</h1>
-                <Button icon={<EditOutlined />} >
+                <h1 className="font-medium text-xl">{partner.username}</h1>
+                <Button icon={<EditOutlined />}>
                   <Link to={`${ERoutesNames.HOME_PARTNERS}/${partner.id}`}>
                     Редактировать
                   </Link>
@@ -110,12 +107,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
               </div>
               <section className="flex flex-col space-y-6">
                 <div className="flex flex-col">
-                  <span>{partner.city}</span>
                   <span>ID:{partner.id}</span>
-                </div>
-                <div className="flex space-x-56">
-                  <span>{partner.standing}</span>
-                  <Button>{partner.statusDeal}</Button>
                 </div>
               </section>
             </div>

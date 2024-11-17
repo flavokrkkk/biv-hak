@@ -1,20 +1,32 @@
+import { partnerMethods } from "@api/partnerResponse";
 import { IPartner } from "@models/common";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { partnersData } from "@utils/partnersdata";
+import {
+  asyncThunkCreator,
+  buildCreateSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+
+const createSliceWithThunks = buildCreateSlice({
+  creators: { asyncThunk: asyncThunkCreator },
+});
 
 export interface PartnersState {
   partners: Array<IPartner>;
   filterPartners: Array<IPartner>;
   selectPartner: IPartner | null;
+  isLoading: boolean;
+  error: string;
 }
 
 const initialState: PartnersState = {
-  partners: partnersData,
-  filterPartners: partnersData,
+  partners: [],
+  filterPartners: [],
   selectPartner: null,
+  error: "",
+  isLoading: false,
 };
 
-export const partnersSlice = createSlice({
+export const partnersSlice = createSliceWithThunks({
   name: "partnersSlice",
   initialState,
   reducers: (create) => ({
@@ -31,10 +43,35 @@ export const partnersSlice = createSlice({
     setSearchPartner: create.reducer(
       (state, { payload }: PayloadAction<string>) => {
         state.filterPartners = state.partners.filter(
-          ({ name: stringSearch }) => {
+          ({ username: stringSearch }) => {
             return stringSearch.toLowerCase().includes(payload.toLowerCase());
           }
         );
+      }
+    ),
+    getAllPartners: create.asyncThunk(
+      async (_, { rejectWithValue }) => {
+        try {
+          const { data } = await partnerMethods.getAllAgents(
+            "/api/company/getagents"
+          );
+          return data;
+        } catch (e) {
+          return rejectWithValue(`${e}`);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.partners = payload;
+          state.filterPartners = payload;
+          state.isLoading = false;
+        },
+        rejected: (state) => {
+          state.error = "Failed To Request!";
+        },
       }
     ),
   }),

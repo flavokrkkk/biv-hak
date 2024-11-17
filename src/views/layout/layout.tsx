@@ -38,7 +38,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             style={{ backgroundImage: "url(/panel.png)" }}
             className="xl:w-[1140px] lg:w-[800px] ml-10 h-[171px] "
           ></div>
-          <div className="flex justify-center mr-auto w-fit ml-10 mt-4" >
+          <div className="flex justify-center mr-auto w-fit ml-10 mt-4">
             <Tabs
               defaultActiveKey="1"
               items={tabData}
