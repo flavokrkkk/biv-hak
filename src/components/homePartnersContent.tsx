@@ -20,6 +20,7 @@ interface IHomePartnersContent {
 const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [partnerLogin, setPartnerLogin] = useState<string>("");
+  
   const toggle = useCallback(() => {
     setIsOpen(!isOpen);
   }, [isOpen]);

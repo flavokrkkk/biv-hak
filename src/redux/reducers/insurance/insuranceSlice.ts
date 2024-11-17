@@ -182,6 +182,17 @@ export const insuranceSlice = createSliceWithThunks({
     setCleanFilter: create.reducer((state) => {
       state.insurancesFilter = state.insurances;
     }),
+    setSelectInsurances: create.reducer(
+      (state, { payload }: PayloadAction<IInsuranceResponseData["id"]>) => {
+        const findIndex = state.insurances.findIndex(
+          (insurance) => insurance.id === payload
+        );
+        
+        if (findIndex !== -1) {
+          state.selectInsurance = state.insurances[findIndex];
+        }
+      }
+    ),
   }),
 });
 
