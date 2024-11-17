@@ -22,8 +22,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
   const [partnerLogin, setPartnerLogin] = useState<string>("");
   const toggle = useCallback(() => {
     setIsOpen(!isOpen);
-  }, []);
-
+  }, [isOpen]);
 
   const handleChangePartnerId = (newPartnerLogin: string) => {
     setPartnerLogin(newPartnerLogin);
@@ -45,13 +44,12 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
     }
   };
 
-  
-
   return (
     <div className="px-4 w-[1140px] mx-auto">
       <Modal
         open={isOpen}
         onClose={toggle}
+        onOk={toggle}
         onCancel={toggle}
         okText="Добавить"
         footer={null}
@@ -102,7 +100,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
             <div>
               <div className="flex justify-between">
                 <h1 className="font-medium text-xl">{partner.name}</h1>
-                <Button icon={<EditOutlined />} >
+                <Button icon={<EditOutlined />}>
                   <Link to={`${ERoutesNames.HOME_PARTNERS}/${partner.id}`}>
                     Редактировать
                   </Link>
