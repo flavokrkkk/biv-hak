@@ -6,9 +6,5 @@ import { RouterProvider } from "react-router-dom";
 export const App = () => {
   const { getRefreshInfo } = useActions();
 
-  useEffect(() => {
-    getRefreshInfo();
-  }, []);
-
   return <RouterProvider router={routes} />;
 };

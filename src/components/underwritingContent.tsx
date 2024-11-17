@@ -74,7 +74,7 @@ export const UnderwritingContent: FC<IUnderwritingContent> = ({}) => {
               size="large"
             />
           </div>
-          <div className="text-gray-800 text-2xl font-semibold my-5">
+          <div className="text-gray-800 text-2xl font-semibold my-6">
             Письма
           </div>
           <div className="flex flex-col space-y-5">
@@ -89,6 +89,14 @@ export const UnderwritingContent: FC<IUnderwritingContent> = ({}) => {
               size="large"
             />
           </div>
+          <Button
+            className="mt-12"
+            variant="dashed"
+            color="default"
+            size="large"
+          >
+            Сохранить пресет
+          </Button>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { ERoutesNames } from "@utils/route";
 import { Button, Input, message, Modal } from "antd";
 import React, { FC, FormEvent, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
+import PartnersList from "./partnersList";
 
 interface IHomePartnersContent {
   filterPartners: IPartner[];
@@ -93,27 +94,7 @@ const HomePartnersContent: FC<IHomePartnersContent> = ({ filterPartners }) => {
       </div>
       <div className="flex flex-col space-y-2">
         {filterPartners.map((partner) => (
-          <div
-            className="border cursor-pointer rounded-lg p-6 pb-10 bg-white ease-in-out"
-            key={partner.id}
-          >
-            <div>
-              <div className="flex justify-between">
-
-                <h1 className="font-medium text-xl">{partner.username}</h1>
-                <Button icon={<EditOutlined />}>
-                  <Link to={`${ERoutesNames.HOME_PARTNERS}/${partner.id}`}>
-                    Редактировать
-                  </Link>
-                </Button>
-              </div>
-              <section className="flex flex-col space-y-6">
-                <div className="flex flex-col">
-                  <span>ID:{partner.id}</span>
-                </div>
-              </section>
-            </div>
-          </div>
+          <PartnersList key={partner.id} partner={partner} />
         ))}
       </div>
     </div>

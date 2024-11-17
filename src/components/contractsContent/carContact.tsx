@@ -4,7 +4,6 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button, Select } from "antd";
-import React from "react";
 
 const CarContact = () => {
   return (

@@ -137,10 +137,10 @@ export const insuranceSlice = createSliceWithThunks({
         },
       }
     ),
-    setAsignAgent: create.asyncThunk(
+    setInsuranceUpdate: create.asyncThunk(
       async (requestData: IInsuranceResponseData, { rejectWithValue }) => {
         try {
-          const { data } = await insuranceMethods.setAsignAgent(
+          const { data } = await insuranceMethods.setInsuranceUpdate(
             "/api/insurance/update",
             requestData
           );
@@ -148,6 +148,34 @@ export const insuranceSlice = createSliceWithThunks({
         } catch (e) {
           return rejectWithValue(`${e}`);
         }
+      }
+    ),
+
+    deleteInsurance: create.asyncThunk(
+      async (insuranceId: number, { rejectWithValue }) => {
+        try {
+          const { data } = await insuranceMethods.deleteInsurance(
+            "/api/insurance/delete",
+            insuranceId
+          );
+          return { data, insuranceId };
+        } catch (e) {
+          return rejectWithValue(e);
+        }
+      },
+      {
+        pending: (state) => {
+          state.isLoading = true;
+        },
+        fulfilled: (state, { payload }) => {
+          state.insurancesFilter = state.insurancesFilter.filter(
+            (el) => el.id !== payload.insuranceId
+          );
+          state.isLoading = false;
+        },
+        rejected: (state) => {
+          state.error = "Invalid request!";
+        },
       }
     ),
 

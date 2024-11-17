@@ -1,13 +1,35 @@
-import { PlusOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  EyeInvisibleOutlined,
+  PlusOutlined,
+  SaveOutlined,
+  ToolOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+import { rootCheck } from "@helpers/rootCheck";
 import { useActions } from "@hooks/useActions";
 import { useAppSelector } from "@hooks/useAppSelector";
 import { ICreateInsuranceData } from "@models/common";
 import { authSelector } from "@redux/selectors";
 import { objectInsurance, risks } from "@utils/insurancedata";
-import { Button, DatePicker, Input, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Input,
+  message,
+  Modal,
+  Select,
+  Steps,
+  Switch,
+} from "antd";
 import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
+import HomeConstructorPanel from "./homeConstructorPanel";
+import { DefaultOptionType } from "antd/es/select";
+import ConstructorForm from "./constructorForm";
 
 const HomeConstructorContent = () => {
+  const [isOpen, setOpen] = useState(false);
+  const [current, setCurrent] = useState(0);
   const [data, setData] = useState<Omit<ICreateInsuranceData, "companyId">>({
     name: "",
     description: "",
@@ -19,6 +41,15 @@ const HomeConstructorContent = () => {
     expiresIn: null,
     duration: 0,
   });
+
+  const [params, setParamsValue] = useState<{ value: string; private: string }>(
+    { private: "", value: "" }
+  );
+
+  const [parametres, addParametres] = useState<
+    { value: string; private: string }[]
+  >([]);
+
   const { user } = useAppSelector(authSelector);
   const { createInsurance } = useActions();
 
@@ -26,11 +57,54 @@ const HomeConstructorContent = () => {
 
   const risksOptions = useMemo(() => risks, []);
 
+  const privateOptions = useMemo(
+    () =>
+      [
+        { label: "Всем", value: "Всем" },
+        { label: "Страховые агенты", value: "Страховые агенты" },
+        { label: "Розничные магазины", value: "Розничные магазины" },
+        { label: "Банки", value: "Банки" },
+      ] as DefaultOptionType[],
+    []
+  );
+
+  const handleAddParams = () => {
+    if (!params.private.length || !params.value.length) {
+      message.info("Заполните все поля!");
+      return;
+    }
+    addParametres((prevState) => [...prevState, { ...params }]);
+  };
+
+  const handleDeleteParams = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const index = event.currentTarget?.value;
+    if (index === undefined || index === null) return;
+    addParametres((prevState) => prevState.filter((_, i) => i !== +index));
+  };
+
+  const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setParamsValue((prevState) => ({
+      ...prevState,
+      value: event.target.value,
+    }));
+  };
+  const onSelect = (value: string) => {
+    setParamsValue((prevState) => ({ ...prevState, private: value }));
+  };
+
+  const checkRoot = rootCheck();
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setData((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  }, []);
+
+  //
+
+  const toggleModal = useCallback(() => {
+    setOpen((prevState) => !prevState);
   }, []);
 
   const handleChangeDate = (e: Date) => {
@@ -59,11 +133,95 @@ const HomeConstructorContent = () => {
     }
   };
 
+  const steps = [
+    {
+      title: "First",
+      content: (
+        <ConstructorForm
+          data={data}
+          options={{ insurance, risksOptions }}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          handleChangeDate={handleChangeDate}
+          handleChangeSelect={handleChangeSelect}
+        />
+      ),
+    },
+    {
+      title: "Second",
+      content: (
+        <ConstructorForm
+          data={data}
+          options={{ insurance, risksOptions }}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          handleChangeDate={handleChangeDate}
+          handleChangeSelect={handleChangeSelect}
+        />
+      ),
+    },
+    {
+      title: "Last",
+      content: (
+        <ConstructorForm
+          data={data}
+          options={{ insurance, risksOptions }}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          handleChangeDate={handleChangeDate}
+          handleChangeSelect={handleChangeSelect}
+        />
+      ),
+    },
+  ].map((item) => ({
+    key: item.title,
+    title: item.title,
+    content: item.content,
+  }));
+
+  const next = () => {
+    setCurrent(current + 1);
+  };
+
+  const prev = () => {
+    setCurrent(current - 1);
+  };
+
   return (
     <>
-      <div className="flex flex-col space-y-4 h-full p-4 w-[1140px] mx-auto">
-        <section className="flex justify-end"></section>
-        <form onSubmit={onSubmit}>
+      <div className="w-[1140px] mx-auto flex flex-col space-y-3 ">
+        {checkRoot && <HomeConstructorPanel toggleModal={toggleModal} />}
+        <Steps current={current} items={steps} />
+        {steps[current].content}
+        <div style={{ marginTop: 24 }}>
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => next()}>
+              Next
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button
+              type="primary"
+              onClick={() => message.success("Processing complete!")}
+            >
+              Done
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+              Previous
+            </Button>
+          )}
+        </div>
+        {/* <ConstructorForm
+          data={data}
+          options={{ insurance, risksOptions }}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          handleChangeDate={handleChangeDate}
+          handleChangeSelect={handleChangeSelect}
+        /> */}
+        {/* <form onSubmit={onSubmit}>
           <div className="bg-white flex justify-between p-6 rounded-lg space-x-4">
             <div className="flex flex-col w-full">
               <h1 className="font-medium text-2xl mb-4">О продуктe</h1>
@@ -227,19 +385,83 @@ const HomeConstructorContent = () => {
               </div>
             </div>
           </div>
-          <div className=" w-full mt-3">
+          <div className=" w-full mt-5">
             <Button
-              size="large"
-              variant="solid"
+              className="w-full"
+              variant="dashed"
               color="primary"
+              size="large"
               htmlType="submit"
-              className=" rounded-xl w-full"
             >
-              Создать
+              Сохранить пресет
             </Button>
           </div>
-        </form>
+        </form> */}
       </div>
+      <Modal open={isOpen} onCancel={toggleModal} footer={null}>
+        <section className="flex flex-col space-y-4">
+          <h1 className="font-medium text-xl">Добавление параметра</h1>
+          <div className="flex w-[435px] space-x-4">
+            <section className="flex space-x-2 items-center w-full">
+              <div className="flex flex-col space-y-4 w-full">
+                <Input
+                  placeholder="Название"
+                  onChange={handleChangeValue}
+                  required
+                />
+              </div>
+              <div className="flex flex-col space-y-4 w-full">
+                <Select
+                  placeholder="Кому виден"
+                  options={privateOptions}
+                  onSelect={onSelect}
+                />
+              </div>
+            </section>
+            <div>
+              <Button
+                variant="outlined"
+                color="primary"
+                icon={<PlusOutlined />}
+                onClick={handleAddParams}
+              />
+            </div>
+          </div>
+          <hr />
+          {parametres.map((param, index) => (
+            <div key={index} className="flex w-full items-center space-x-4">
+              <div className="w-full">
+                <Input placeholder={param.value} value={param.value} required />
+              </div>
+              <div className="w-full">
+                <Input
+                  placeholder={param.private}
+                  value={param.private}
+                  required
+                />
+              </div>
+              <div className="flex space-x-1">
+                <Button
+                  icon={<CloseOutlined />}
+                  variant="solid"
+                  color="danger"
+                  value={index.toString()}
+                  onClick={handleDeleteParams}
+                />
+                <Button icon={<EyeInvisibleOutlined />} />
+              </div>
+            </div>
+          ))}
+        </section>
+        <div className="mt-16 flex space-x-2">
+          <Button variant="solid" color="primary" icon={<SaveOutlined />}>
+            Сохраниь
+          </Button>
+          <Button variant="solid" color="primary">
+            Отмена
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 };

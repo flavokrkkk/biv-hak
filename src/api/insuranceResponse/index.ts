@@ -27,6 +27,8 @@ export const insuranceMethods = {
     insuranceId: number
   ): Promise<AxiosResponse<IInsuranceResponseData>> =>
     axiosWithAuth.get(urL, { params: { insuranceId: insuranceId } }),
-  setAsignAgent: (url: string, body: IInsuranceResponseData) =>
+  setInsuranceUpdate: (url: string, body: IInsuranceResponseData) =>
     axiosWithAuth.put(url, body),
+  deleteInsurance: (url: string, insuranceId: number) =>
+    axiosWithAuth.delete(url, { params: { insuranceId: insuranceId } }),
 };

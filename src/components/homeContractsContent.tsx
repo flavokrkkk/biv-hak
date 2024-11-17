@@ -27,8 +27,8 @@ export const HomeContractsContent = () => {
     return [
       {
         title: "№ договора",
-        dataIndex: "number",
-        key: "number",
+        dataIndex: "id",
+        key: "id",
       },
       {
         title: "ФИО",
@@ -85,7 +85,12 @@ export const HomeContractsContent = () => {
             Выбрать
           </Button>
         </div>
-        <Table dataSource={dataSource} columns={dataColumns} size="large" />
+        <Table
+          dataSource={dataSource}
+          columns={dataColumns}
+          size="large"
+          loading={!insurancesFilter.length}
+        />
       </HomeInfoLayout>
     </div>
   );
