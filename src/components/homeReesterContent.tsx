@@ -126,7 +126,7 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
             <h1 className="font-medium text-2xl mb-2">Доступные услуги</h1>
             <div className="flex flex-col space-y-2">
               <div className="flex flex-col space-y-1">
-                <label>Услуга</label>
+                <label>Риск страхования</label>
                 <Input
                   required
                   size="large"
@@ -137,7 +137,7 @@ const HomeReesterContent: FC<IHomeReesterContent> = ({
                 />
               </div>
               <div className="flex flex-col space-y-1">
-                <label>Услуга</label>
+                <label>Объект страхования</label>
                 <Input
                   required
                   size="large"
